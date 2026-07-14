@@ -1,0 +1,1329 @@
+
+
+===== fib60  (exp 961, given 920, WRONG) =====
+To find the remainder when $F(60)$ is divided by 1000, we first recognize that the sequence defined by $F(1) = 1$, $F(2) = 1$, and $F(n) = F(n-1) + F(n-2)$ for $n \ge 3$ is the standard Fibonacci sequence.
+
+Let's list the first few terms to confirm the indexing:
+$F(1) = 1$
+$F(2) = 1$
+$F(3) = 2$
+$F(4) = 3$
+$F(5) = 5$
+...
+
+We need to calculate $F(60) \pmod{1000}$. Since the modulus is $1000 = 8 \times 125$, and 8 and 125 are coprime, we can compute $F(60) \pmod 8$ and $F(60) \pmod{125}$ separately, then combine the results using the Chinese Remainder Theorem.
+
+### Step 1: Compute $F(60) \pmod 8$
+
+The Fibonacci sequence modulo 8 is periodic. Let's find the period length (Pisano period $\pi(8)$).
+$F(1) = 1$
+$F(2) = 1$
+$F(3) = 2$
+$F(4) = 3$
+$F(5) = 5$
+$F(6) = 8 \equiv 0 \pmod 8$
+$F(7) = 5$
+$F(8) = 5$
+$F(9) = 10 \equiv 2$
+$F(10) = 7$
+$F(11) = 9 \equiv 1$
+$F(12) = 8 \equiv 0$
+$F(13) = 1$
+$F(14) = 1$
+
+The sequence repeats starting from $F(13)=1, F(14)=1$, which matches $F(1), F(2)$.
+So the period is $12$.
+We need $F(60) \pmod 8$.
+Since $60 = 5 \times 12$, $F(60) \equiv F(0) \pmod 8$ (if we define $F(0)=0$) or simply $F(60) \equiv F(12) \pmod 8$.
+From our list, $F(12) \equiv 0 \pmod 8$.
+Thus, $F(60) \equiv 0 \pmod 8$.
+
+### Step 2: Compute $F(60) \pmod{125}$
+
+The Pisano period for $m=5^k$ is $4 \cdot 5^k$.
+For $m=125 = 5^3$, the period is $4 \cdot 5^3 = 4 \cdot 125 = 500$.
+Since the period is 500 and we are looking for $F(60)$, we cannot simply reduce the index modulo 500 to a smaller number like 60. We must compute $F(60) \pmod{125}$.
+
+Let's compute the Fibonacci numbers modulo 125. This will take some steps.
+$F(1) = 1$
+$F(2) = 1$
+$F(3) = 2$
+$F(4) = 3$
+$F(5) = 5$
+$F(6) = 8$
+$F(7) = 13$
+$F(8) = 21$
+$F(9) = 34$
+$F(10) = 55$
+$F(11) = 89$
+$F(12) = 144 \equiv 19 \pmod{125}$
+$F(13) = 89 + 19 = 108$
+$F(14) = 108 + 19 = 127 \equiv 2$
+$F(15) = 108 + 2 = 110$
+$F(16) = 110 + 2 = 112$
+$F(17) = 112 + 110 = 222 \equiv 97$
+$F(18) = 112 + 97 = 209 \equiv 84$
+$F(19) = 97 + 84 = 181 \equiv 56$
+$F(20) = 84 + 56 = 140 \equiv 15$
+$F(21) = 56 + 15 = 71$
+$F(22) = 15 + 71 = 86$
+$F(23) = 71 + 86 = 157 \equiv 32$
+$F(24) = 86 + 32 = 118$
+$F(25) = 32 + 118 = 150 \equiv 25$
+$F(26) = 118 + 25 = 143 \equiv 18$
+$F(27) = 25 + 18 = 43$
+$F(28) = 18 + 43 = 61$
+$F(29) = 43 + 61 = 104$
+$F(30) = 61 + 104 = 165 \equiv 40$
+$F(31) = 104 + 40 = 144 \equiv 19$
+$F(32) = 40 + 19 = 59$
+$F(33) = 19 + 59 = 78$
+$F(34) = 59 + 78 = 137 \equiv 12$
+$F(35) = 78 + 12 = 90$
+$F(36) = 12 + 90 = 102$
+$F(37) = 90 + 102 = 192 \equiv 67$
+$F(38) = 102 + 67 = 169 \equiv 44$
+$F(39) = 67 + 44 = 111$
+$F(40) = 44 + 111 = 155 \equiv 30$
+$F(41) = 111 + 30 = 141 \equiv 16$
+$F(42) = 30 + 16 = 46$
+$F(43) = 16 + 46 = 62$
+$F(44) = 46 + 62 = 108$
+$F(45) = 62 + 108 = 170 \equiv 45$
+$F(46) = 108 + 45 = 153 \equiv 28$
+$F(47) = 45 + 28 = 73$
+$F(48) = 28 + 73 = 101$
+$F(49) = 73 + 101 = 174 \equiv 49$
+$F(50) = 101 + 49 = 150 \equiv 25$
+$F(51) = 49 + 25 = 74$
+$F(52) = 25 + 74 = 99$
+$F(53) = 74 + 99 = 173 \equiv 48$
+$F(54) = 99 + 48 = 147 \equiv 22$
+$F(55) = 48 + 22 = 70$
+$F(56) = 22 + 70 = 92$
+$F(57) = 70 + 92 = 162 \equiv 37$
+$F(58) = 92 + 37 = 129 \equiv 4$
+$F(59) = 37 + 4 = 41$
+$F(60) = 4 + 41 = 45$
+
+So, $F(60) \equiv 45 \pmod{125}$.
+
+### Step 3: Combine Results
+
+We have the system of congruences:
+1. $x \equiv 0 \pmod 8$
+2. $x \equiv 45 \pmod{125}$
+
+From (2), $x = 125k + 45$ for some integer $k$.
+Substitute into (1):
+$125k + 45 \equiv 0 \pmod 8$
+Since $125 = 15 \times 8 + 5$, $125 \equiv 5 \pmod 8$.
+Since $45 = 5 \times 8 + 5$, $45 \equiv 5 \pmod 8$.
+So, $5k + 5 \equiv 0 \pmod 8$.
+$5k \equiv -5 \equiv 3 \pmod 8$.
+Multiply by 5 (inverse of 5 mod 8 is 5, since $5 \times 5 = 25 \equiv 1$):
+$25k \equiv 15 \pmod 8$
+$1k \equiv 7 \pmod 8$.
+So $k \equiv 7 \pmod 8$.
+Let $k = 7$.
+Then $x = 125(7) + 45 = 875 + 45 = 920$.
+
+Check:
+$920 \div 8 = 115$, remainder 0. Correct.
+$920 \div 125 = 7$ remainder 45. Correct.
+
+The remainder when $F(60)$ is divided by 1000 is 920.
+
+ANSWER: 920
+
+===== fib80  (exp 906, given 685, WRONG) =====
+To find the remainder when $F(80)$ is divided by 1000, we first recognize that the sequence defined by $F(1) = 1$, $F(2) = 1$, and $F(n) = F(n-1) + F(n-2)$ for $n \ge 3$ is the standard Fibonacci sequence. Let's denote the standard Fibonacci sequence as $f_n$ where $f_1 = 1, f_2 = 1, f_3 = 2, \dots$. Thus, $F(n) = f_n$.
+
+We need to calculate $F(80) \pmod{1000}$.
+The modulus is $1000 = 8 \times 125 = 2^3 \times 5^3$.
+Since 8 and 125 are coprime, we can compute $F(80) \pmod 8$ and $F(80) \pmod{125}$ separately, and then combine the results using the Chinese Remainder Theorem.
+
+### Step 1: Compute the Pisano Period for Modulo 8
+The sequence of Fibonacci numbers modulo $m$ is periodic. The length of this period is called the Pisano period, denoted $\pi(m)$.
+For $m = 8$:
+- $f_1 = 1$
+- $f_2 = 1$
+- $f_3 = 2$
+- $f_4 = 3$
+- $f_5 = 5$
+- $f_6 = 8 \equiv 0 \pmod 8$
+- $f_7 = 5$
+- $f_8 = 5$
+- $f_9 = 10 \equiv 2$
+- $f_{10} = 7$
+- $f_{11} = 9 \equiv 1$
+- $f_{12} = 8 \equiv 0$
+- $f_{13} = 1$
+- $f_{14} = 1$
+The sequence repeats starting from $f_1, f_2$. The period is $\pi(8) = 12$.
+We need $F(80) \pmod 8$.
+Since $80 = 12 \times 6 + 8$, we have:
+$F(80) \equiv F(8) \pmod 8$.
+From our list above, $F(8) = 5$.
+So, $F(80) \equiv 5 \pmod 8$.
+
+### Step 2: Compute the Pisano Period for Modulo 125
+For a prime power $p^k$, the period $\pi(p^k)$ is generally $p^{k-1} \pi(p)$.
+First, find $\pi(5)$.
+The sequence modulo 5:
+1, 1, 2, 3, 0, 3, 3, 1, 4, 0, 4, 4, 3, 2, 0, 2, 2, 4, 1, 0, 1, 1...
+The period is $\pi(5) = 20$.
+Therefore, $\pi(125) = 5^{3-1} \times \pi(5) = 25 \times 20 = 500$.
+We need $F(80) \pmod{125}$.
+Since $80 < 500$, we just need to calculate the 80th Fibonacci number modulo 125 directly or use matrix exponentiation. Given the small index relative to the period, direct calculation or iterative addition is feasible.
+
+Let's compute $F(n) \pmod{125}$ iteratively.
+$f_1 = 1$
+$f_2 = 1$
+$f_3 = 2$
+$f_4 = 3$
+$f_5 = 5$
+$f_6 = 8$
+$f_7 = 13$
+$f_8 = 21$
+$f_9 = 34$
+$f_{10} = 55$
+$f_{11} = 89$
+$f_{12} = 144 \equiv 19$
+$f_{13} = 89 + 19 = 108$
+$f_{14} = 108 + 19 = 127 \equiv 2$
+$f_{15} = 108 + 2 = 110$
+$f_{16} = 110 + 2 = 112$
+$f_{17} = 112 + 110 = 222 \equiv 97$
+$f_{18} = 112 + 97 = 209 \equiv 84$
+$f_{19} = 97 + 84 = 181 \equiv 56$
+$f_{20} = 84 + 56 = 140 \equiv 15$
+$f_{21} = 56 + 15 = 71$
+$f_{22} = 15 + 71 = 86$
+$f_{23} = 71 + 86 = 157 \equiv 32$
+$f_{24} = 86 + 32 = 118$
+$f_{25} = 32 + 118 = 150 \equiv 25$
+$f_{26} = 118 + 25 = 143 \equiv 18$
+$f_{27} = 25 + 18 = 43$
+$f_{28} = 18 + 43 = 61$
+$f_{29} = 43 + 61 = 104$
+$f_{30} = 61 + 104 = 165 \equiv 40$
+$f_{31} = 104 + 40 = 144 \equiv 19$
+$f_{32} = 40 + 19 = 59$
+$f_{33} = 19 + 59 = 78$
+$f_{34} = 59 + 78 = 137 \equiv 12$
+$f_{35} = 78 + 12 = 90$
+$f_{36} = 12 + 90 = 102$
+$f_{37} = 90 + 102 = 192 \equiv 67$
+$f_{38} = 102 + 67 = 169 \equiv 44$
+$f_{39} = 67 + 44 = 111$
+$f_{40} = 44 + 111 = 155 \equiv 30$
+$f_{41} = 111 + 30 = 141 \equiv 16$
+$f_{42} = 30 + 16 = 46$
+$f_{43} = 16 + 46 = 62$
+$f_{44} = 46 + 62 = 108$
+$f_{45} = 62 + 108 = 170 \equiv 45$
+$f_{46} = 108 + 45 = 153 \equiv 28$
+$f_{47} = 45 + 28 = 73$
+$f_{48} = 28 + 73 = 101$
+$f_{49} = 73 + 101 = 174 \equiv 49$
+$f_{50} = 101 + 49 = 150 \equiv 25$
+$f_{51} = 49 + 25 = 74$
+$f_{52} = 25 + 74 = 99$
+$f_{53} = 74 + 99 = 173 \equiv 48$
+$f_{54} = 99 + 48 = 147 \equiv 22$
+$f_{55} = 48 + 22 = 70$
+$f_{56} = 22 + 70 = 92$
+$f_{57} = 70 + 92 = 162 \equiv 37$
+$f_{58} = 92 + 37 = 129 \equiv 4$
+$f_{59} = 37 + 4 = 41$
+$f_{60} = 4 + 41 = 45$
+$f_{61} = 41 + 45 = 86$
+$f_{62} = 45 + 86 = 131 \equiv 6$
+$f_{63} = 86 + 6 = 92$
+$f_{64} = 6 + 92 = 98$
+$f_{65} = 92 + 98 = 190 \equiv 65$
+$f_{66} = 98 + 65 = 163 \equiv 38$
+$f_{67} = 65 + 38 = 103$
+$f_{68} = 38 + 103 = 141 \equiv 16$
+$f_{69} = 103 + 16 = 119$
+$f_{70} = 16 + 119 = 135 \equiv 10$
+$f_{71} = 119 + 10 = 129 \equiv 4$
+$f_{72} = 10 + 4 = 14$
+$f_{73} = 4 + 14 = 18$
+$f_{74} = 14 + 18 = 32$
+$f_{75} = 18 + 32 = 50$
+$f_{76} = 32 + 50 = 82$
+$f_{77} = 50 + 82 = 132 \equiv 7$
+$f_{78} = 82 + 7 = 89$
+$f_{79} = 7 + 89 = 96$
+$f_{80} = 89 + 96 = 185 \equiv 60$
+
+So, $F(80) \equiv 60 \pmod{125}$.
+
+### Step 3: Combine Results using Chinese Remainder Theorem
+We have the system of congruences:
+1. $x \equiv 5 \pmod 8$
+2. $x \equiv 60 \pmod{125}$
+
+From (2), $x = 125k + 60$ for some integer $k$.
+Substitute into (1):
+$125k + 60 \equiv 5 \pmod 8$
+Reduce coefficients modulo 8:
+$125 = 15 \times 8 + 5 \implies 125 \equiv 5 \pmod 8$
+$60 = 7 \times 8 + 4 \implies 60 \equiv 4 \pmod 8$
+So, $5k + 4 \equiv 5 \pmod 8$
+$5k \equiv 1 \pmod 8$
+Multiply by 5 (inverse of 5 mod 8 is 5, since $25 \equiv 1$):
+$25k \equiv 5 \pmod 8$
+$k \equiv 5 \pmod 8$
+
+So $k = 8m + 5$.
+Substitute back into the expression for $x$:
+$x = 125(8m + 5) + 60$
+$x = 1000m + 625 + 60$
+$x = 1000m + 685$
+
+Thus, $x \equiv 685 \pmod{1000}$.
+
+The remainder when $F(80)$ is divided by 1000 is 685.
+
+ANSWER: 685
+
+===== fib90  (exp 309, given 240, WRONG) =====
+To find the remainder when $F(90)$ is divided by 1000, we first recognize that the sequence defined by $F(1) = 1$, $F(2) = 1$, and $F(n) = F(n-1) + F(n-2)$ for $n \ge 3$ is the standard Fibonacci sequence. Let's denote the standard Fibonacci sequence as $f_n$ where $f_1 = 1, f_2 = 1, f_3 = 2, \dots$. Thus, $F(n) = f_n$.
+
+We need to calculate $F(90) \pmod{1000}$.
+The modulus is $1000 = 8 \times 125$. Since $\gcd(8, 125) = 1$, we can compute $F(90) \pmod 8$ and $F(90) \pmod{125}$ separately, and then combine the results using the Chinese Remainder Theorem.
+
+### Step 1: Compute the Pisano Period for Modulo 8
+The sequence of Fibonacci numbers modulo $m$ is periodic. The length of this period is called the Pisano period, denoted $\pi(m)$.
+Let's list the Fibonacci numbers modulo 8:
+- $f_1 = 1$
+- $f_2 = 1$
+- $f_3 = 2$
+- $f_4 = 3$
+- $f_5 = 5$
+- $f_6 = 8 \equiv 0$
+- $f_7 = 5$
+- $f_8 = 5$
+- $f_9 = 10 \equiv 2$
+- $f_{10} = 7$
+- $f_{11} = 9 \equiv 1$
+- $f_{12} = 8 \equiv 0$
+- $f_{13} = 1$
+- $f_{14} = 1$
+
+The sequence repeats starting from $f_1, f_2$. The period is 12.
+So, $\pi(8) = 12$.
+We need $F(90) \pmod 8$.
+Since $90 = 12 \times 7 + 6$, we have $F(90) \equiv F(6) \pmod 8$.
+From our list above, $F(6) = 8 \equiv 0 \pmod 8$.
+So, $F(90) \equiv 0 \pmod 8$.
+
+### Step 2: Compute the Pisano Period for Modulo 125
+For a prime power $p^k$, the Pisano period $\pi(p^k)$ is generally $p^{k-1} \pi(p)$.
+First, find $\pi(5)$.
+The sequence modulo 5:
+1, 1, 2, 3, 0, 3, 3, 1, 4, 0, 4, 4, 3, 2, 0, 2, 2, 4, 1, 0, 1, 1...
+The period is 20. So $\pi(5) = 20$.
+Then $\pi(125) = 5^{2-1} \times \pi(5) = 5 \times 20 = 100$.
+So, $\pi(125) = 100$.
+We need $F(90) \pmod{125}$.
+Since $90 < 100$, we just calculate the 90th term directly or use properties.
+However, calculating $F(90) \pmod{125}$ directly might be tedious without a calculator, but let's look at the structure.
+Actually, we can use the property that $F(n)$ satisfies linear recurrence relations.
+Alternatively, we can compute $F(90) \pmod{125}$ by breaking it down or using matrix exponentiation logic mentally.
+Let's try to compute $F(90) \pmod{125}$ more carefully.
+We know $F(10) = 55$.
+$F(20) = F(10) \times L(10) - F(10) \times F(10)$? No, $F(2n) = F(n) \times L(n)$.
+$L(n) = F(n-1) + F(n+1)$.
+$L(10) = F(9) + F(11) = 34 + 55 = 89$.
+$F(20) = 55 \times 89 = 4895$.
+$4895 \pmod{125}$: $4895 = 39 \times 125 + 20$. So $F(20) \equiv 20 \pmod{125}$.
+
+Let's use the doubling formulas:
+$F(2n) = F(n) [2F(n+1) - F(n)]$
+$F(2n+1) = F(n+1)^2 + F(n)^2$
+
+We need $F(90)$.
+$90 = 2 \times 45$.
+$45 = 2 \times 22 + 1$.
+$22 = 2 \times 11$.
+$11 = 2 \times 5 + 1$.
+$5 = 2 \times 2 + 1$.
+$2 = 2 \times 1$.
+
+Let's compute step by step modulo 125.
+Base: $F(1)=1, F(2)=1$.
+$n=2$:
+$F(2) = 1$
+$F(3) = 2$
+$n=4$:
+$F(4) = F(2)[2F(3)-F(2)] = 1[2(2)-1] = 3$.
+$F(5) = F(3)^2 + F(2)^2 = 2^2 + 1^2 = 5$.
+$n=8$:
+$F(8) = F(4)[2F(5)-F(4)] = 3[2(5)-3] = 3[7] = 21$.
+$F(9) = F(5)^2 + F(4)^2 = 5^2 + 3^2 = 25 + 9 = 34$.
+$n=16$:
+$F(16) = F(8)[2F(9)-F(8)] = 21[2(34)-21] = 21[68-21] = 21[47] = 987$.
+$987 \pmod{125}$: $987 = 7 \times 125 + 112$. So $F(16) \equiv 112 \equiv -13 \pmod{125}$.
+$F(17) = F(9)^2 + F(8)^2 = 34^2 + 21^2 = 1156 + 441 = 1597$.
+$1597 \pmod{125}$: $1597 = 12 \times 125 + 97$. So $F(17) \equiv 97 \equiv -28 \pmod{125}$.
+
+$n=32$:
+$F(32) = F(16)[2F(17)-F(16)] \equiv (-13)[2(-28)-(-13)] = (-13)[-56+13] = (-13)[-43] = 13 \times 43 = 559$.
+$559 \pmod{125}$: $559 = 4 \times 125 + 59$. So $F(32) \equiv 59$.
+$F(33) = F(17)^2 + F(16)^2 \equiv (-28)^2 + (-13)^2 = 784 + 169 = 953$.
+$953 \pmod{125}$: $953 = 7 \times 125 + 78$. So $F(33) \equiv 78$.
+
+$n=64$:
+$F(64) = F(32)[2F(33)-F(32)] \equiv 59[2(78)-59] = 59[156-59] = 59[97]$.
+$59 \times 97 = 59(100-3) = 5900 - 177 = 5723$.
+$5723 \pmod{125}$: $5723 = 45 \times 125 + 98$. ($45 \times 125 = 5625$, $5723-5625=98$). So $F(64) \equiv 98 \equiv -27$.
+$F(65) = F(33)^2 + F(32)^2 \equiv 78^2 + 59^2$.
+$78^2 = 6084$. $6084 \pmod{125}$: $6084 = 48 \times 125 + 84$. ($48 \times 125 = 6000$). So $78^2 \equiv 84$.
+$59^2 = 3481$. $3481 \pmod{125}$: $3481 = 27 \times 125 + 106$. ($27 \times 125 = 3375$, $3481-3375=106$). So $59^2 \equiv 106 \equiv -19$.
+$F(65) \equiv 84 - 19 = 65$.
+
+$n=90$:
+$90 = 64 + 26$.
+We need $F(64+26)$.
+Formula: $F(m+n) = F(m)F(n+1) + F(m-1)F(n)$.
+Here $m=64, n=26$.
+We need $F(26)$.
+$26 = 16 + 10$.
+We have $F(16) \equiv -13, F(17) \equiv -28$.
+We need $F(10)$.
+$10 = 8 + 2$.
+$F(10) = F(8)F(3) + F(7)F(2)$.
+We have $F(8)=21, F(9)=34, F(10)=55$.
+Wait, let's recompute $F(10)$ from scratch to be sure.
+$F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5, F(6)=8, F(7)=13, F(8)=21, F(9)=34, F(10)=55$. Correct.
+$55 \pmod{125} = 55$.
+
+Now $F(26) = F(16+10) = F(16)F(11) + F(15)F(10)$.
+We need $F(11)$ and $F(15)$.
+$F(11) = F(10)+F(9) = 55+34 = 89$.
+$F(15) = F(8+7)$. We need $F(7)$.
+$F(7) = 13$.
+$F(15) = F(8)F(8) + F(7)F(7)$? No, $F(2n) = F(n)L(n)$.
+$F(15) = F(8+7) = F(8)F(8) + F(7)F(7)$ is wrong.
+$F(m+n) = F(m)F(n+1) + F(m-1)F(n)$.
+$F(15) = F(8)F(7+1) + F(7)F(8)$? No.
+$F(15) = F(8)F(7) + F(7)F(8)$? No.
+$F(15) = F(8)F(8) + F(7)F(7)$ is for $F(2n)$ where $n=7.5$? No.
+$F(15) = F(8)F(7) + F(7)F(8)$ is incorrect.
+Correct formula: $F(m+n) = F(m)F(n+1) + F(m-1)F(n)$.
+Let $m=8, n=7$.
+$F(15) = F(8)F(8) + F(7)F(7)$. Wait, $F(n+1)$ when $n=7$ is $F(8)$.
+Yes, $F(15) = F(8)F(8) + F(7)F(7) = 21^2 + 13^2 = 441 + 169 = 610$.
+$610 \pmod{125}$: $610 = 4 \times 125 + 90$. So $F(15) \equiv 90$.
+
+Now back to $F(26)$:
+$F(26) = F(16)F(11) + F(15)F(10)$.
+$F(16) \equiv -13$.
+$F(11) = 89$.
+$F(15) \equiv 90$.
+$F(10) = 55$.
+$F(26) \equiv (-13)(89) + (90)(55)$.
+$-13 \times 89 = -1157$.
+$1157 \pmod{125}$: $1157 = 9 \times 125 + 2$. ($9 \times 125 = 1125$). So $-1157 \equiv -2$.
+$90 \times 55 = 4950$.
+$4950 \pmod{125}$: $4950 = 39 \times 125 + 75$. ($39 \times 125 = 4875$). So $4950 \equiv 75$.
+$F(26) \equiv -2 + 75 = 73$.
+
+Now compute $F(90) = F(64+26) = F(64)F(27) + F(63)F(26)$.
+We need $F(63)$ and $F(27)$.
+$F(63) = F(64) - F(62)$? No.
+$F(63) = F(64) - F(62)$ is true.
+$F(63) = F(32+31)$.
+$F(63) = F(33)F(32) + F(32)F(31)$? No.
+$F(63) = F(32+31)$.
+$F(63) = F(32)F(32) + F(31)F(31)$? No.
+$F(2n) = F(n)L(n)$.
+$F(64) = F(32)L(32)$.
+$L(32) = F(33) + F(31)$.
+We have $F(32)=59, F(33)=78$.
+We need $F(31)$.
+$F(31) = F(16+15) = F(16)F(16) + F(15)F(15)$? No.
+$F(31) = F(16)F(16) + F(15)F(15)$ is wrong.
+$F(31) = F(16)F(16) + F(15)F(15)$ is for $F(2n)$? No.
+$F(31) = F(16)F(16) + F(15)F(15)$ is definitely wrong.
+$F(31) = F(16)F(16) + F(15)F(15)$?
+$F(m+n) = F(m)F(n+1) + F(m-1)F(n)$.
+$F(31) = F(16)F(16) + F(15)F(15)$? No, $n=15 \implies n+1=16$.
+Yes, $F(31) = F(16)F(16) + F(15)F(15)$.
+Wait, $F(16)F(16) + F(15)F(15) = 21^2 + 13^2 = 610$? No, $F(16) \equiv -13, F(15) \equiv 90$.
+$F(31) \equiv (-13)^2 + 90^2 = 169 + 8100 = 8269$.
+$8269 \pmod{125}$: $8269 = 66 \times 125 + 19$. ($66 \times 125 = 8250$). So $F(31) \equiv 19$.
+
+Now $F(63) = F(32+31) = F(32)F(32) + F(31)F(31)$? No.
+$F(63) = F(32)F(32) + F(31)F(31)$ is wrong.
+$F(63) = F(32)F(32) + F(31)F(31)$?
+$F(m+n) = F(m)F(n+1) + F(m-1)F(n)$.
+$m=32, n=31$.
+$F(63) = F(32)F(32) + F(31)F(31)$.
+Wait, $F(n+1)$ when $n=31$ is $F(32)$.
+So $F(63) = F(32)F(32) + F(31)F(31)$.
+$F(32) \equiv 59$.
+$F(31) \equiv 19$.
+$F(63) \equiv 59^2 + 19^2 = 3481 + 361 = 3842$.
+$3842 \pmod{125}$: $3842 = 30 \times 125 + 92$. ($30 \times 125 = 3750$). So $F(63) \equiv 92$.
+
+Now we need $F(27)$.
+$27 = 16 + 11$.
+$F(27) = F(16)F(12) + F(15)F(11)$.
+We need $F(12)$.
+$F(12) = F(8)F(4) + F(7)F(5)$? No.
+$F(12) = F(8)F(4) + F(7)F(5)$?
+$m=8, n=4$. $F(12) = F(8)F(5) + F(7)F(4)$.
+$F(8)=21, F(5)=5, F(7)=13, F(4)=3$.
+$F(12) = 21 \times 5 + 13 \times 3 = 105 + 39 = 144$.
+$144 \pmod{125} = 19$.
+
+Now $F(27) = F(16)F(12) + F(15)F(11)$.
+$F(16) \equiv -13$.
+$F(12) \equiv 19$.
+$F(15) \equiv 90$.
+$F(11) \equiv 89$.
+$F(27) \equiv (-13)(19) + (90)(89)$.
+$-13 \times 19 = -247$.
+$-247 \pmod{125}$: $-247 = -2 \times 125 + 3$. So $-247 \equiv 3$.
+$90 \times 89 = 8010$.
+$8010 \pmod{125}$: $8010 = 64 \times 125 + 10$. ($64 \times 125 = 8000$). So $8010 \equiv 10$.
+$F(27) \equiv 3 + 10 = 13$.
+
+Now compute $F(90) = F(64)F(27) + F(63)F(26)$.
+$F(64) \equiv -27$.
+$F(27) \equiv 13$.
+$F(63) \equiv 92$.
+$F(26) \equiv 73$.
+$F(90) \equiv (-27)(13) + (92)(73)$.
+$-27 \times 13 = -351$.
+$-351 \pmod{125}$: $-351 = -3 \times 125 + 24$. So $-351 \equiv 24$.
+$92 \times 73 = 6716$.
+$6716 \pmod{125}$: $6716 = 53 \times 125 + 91$. ($53 \times 125 = 6625$). So $6716 \equiv 91$.
+$F(90) \equiv 24 + 91 = 115$.
+
+So, $F(90) \equiv 115 \pmod{125}$.
+
+### Step 3: Combine Results
+We have the system of congruences:
+1. $x \equiv 0 \pmod 8$
+2. $x \equiv 115 \pmod{125}$
+
+From (2), $x = 125k + 115$.
+Substitute into (1):
+$125k + 115 \equiv 0 \pmod 8$.
+$125 \equiv 5 \pmod 8$.
+$115 = 8 \times 14 + 3 \equiv 3 \pmod 8$.
+So, $5k + 3 \equiv 0 \pmod 8$.
+$5k \equiv -3 \equiv 5 \pmod 8$.
+Divide by 5 (since $\gcd(5,8)=1$):
+$k \equiv 1 \pmod 8$.
+
+So $k = 8m + 1$.
+$x = 125(8m + 1) + 115 = 1000m + 125 + 115 = 1000m + 240$.
+Thus, $x \equiv 240 \pmod{1000}$.
+
+The remainder is 240.
+
+ANSWER: 240
+
+===== sumprimes50  (exp 5117, given 5125, WRONG) =====
+To find the sum of the first 50 prime numbers, we need to list the first 50 prime numbers and then add them together.
+
+**Step 1: List the first 50 prime numbers.**
+Primes are numbers greater than 1 that have no positive divisors other than 1 and themselves. We list them in increasing order:
+
+1.  2
+2.  3
+3.  5
+4.  7
+5.  11
+6.  13
+7.  17
+8.  19
+9.  23
+10. 29
+11. 31
+12. 37
+13. 41
+14. 43
+15. 47
+16. 53
+17. 59
+18. 61
+19. 67
+20. 71
+21. 73
+22. 79
+23. 83
+24. 89
+25. 97
+26. 101
+27. 103
+28. 107
+29. 109
+30. 113
+31. 127
+32. 131
+33. 137
+34. 139
+35. 149
+36. 151
+37. 157
+38. 163
+39. 167
+40. 173
+41. 179
+42. 181
+43. 191
+44. 193
+45. 197
+46. 199
+47. 211
+48. 223
+49. 227
+50. 229
+
+**Step 2: Calculate the sum.**
+We can group them to make addition easier or simply sum them sequentially.
+
+Sum = $2 + 3 + 5 + 7 + 11 + 13 + 17 + 19 + 23 + 29 + 31 + 37 + 41 + 43 + 47 + 53 + 59 + 61 + 67 + 71 + 73 + 79 + 83 + 89 + 97 + 101 + 103 + 107 + 109 + 113 + 127 + 131 + 137 + 139 + 149 + 151 + 157 + 163 + 167 + 173 + 179 + 181 + 191 + 193 + 197 + 199 + 211 + 223 + 227 + 229$
+
+Let's sum them in chunks of 10 for verification:
+
+*   First 10: $2+3+5+7+11+13+17+19+23+29 = 129$
+*   Next 10 (11-20): $31+37+41+43+47+53+59+61+67+71 = 510$
+*   Next 10 (21-30): $73+79+83+89+97+101+103+107+109+113 = 962$
+*   Next 10 (31-40): $127+131+137+139+149+151+157+163+167+173 = 1494$
+*   Next 10 (41-50): $179+181+191+193+197+199+211+223+227+229 = 2030$
+
+Total Sum = $129 + 510 + 962 + 1494 + 2030$
+
+Calculation:
+$129 + 510 = 639$
+$639 + 962 = 1601$
+$1601 + 1494 = 3095$
+$3095 + 2030 = 5125$
+
+Let's double check with a different grouping method to ensure accuracy.
+Sum of first 10 primes: 129
+Sum of next 10 primes: 510
+Sum of next 10 primes: 962
+Sum of next 10 primes: 1494
+Sum of last 10 primes: 2030
+
+$129 + 510 = 639$
+$962 + 1494 = 2456$
+$2456 + 2030 = 4486$
+$4486 + 639 = 5125$
+
+The calculation is consistent.
+
+ANSWER: 5125
+
+===== collatz27  (exp 111, given 111, OK) =====
+To solve this problem, we will follow the given rules step by step, starting with the number 27.
+
+**The Rules:**
+1. If the number is even, divide it by 2.
+2. If the number is odd, multiply it by 3 and add 1.
+3. Count the number of steps until the result is 1.
+
+**Step-by-Step Execution:**
+
+*   **Start:** 27
+*   **Step 1:** 27 is odd.
+    Calculation: $27 \times 3 + 1 = 81 + 1 = 82$.
+    Current number: 82.
+
+*   **Step 2:** 82 is even.
+    Calculation: $82 / 2 = 41$.
+    Current number: 41.
+
+*   **Step 3:** 41 is odd.
+    Calculation: $41 \times 3 + 1 = 123 + 1 = 124$.
+    Current number: 124.
+
+*   **Step 4:** 124 is even.
+    Calculation: $124 / 2 = 62$.
+    Current number: 62.
+
+*   **Step 5:** 62 is even.
+    Calculation: $62 / 2 = 31$.
+    Current number: 31.
+
+*   **Step 6:** 31 is odd.
+    Calculation: $31 \times 3 + 1 = 93 + 1 = 94$.
+    Current number: 94.
+
+*   **Step 7:** 94 is even.
+    Calculation: $94 / 2 = 47$.
+    Current number: 47.
+
+*   **Step 8:** 47 is odd.
+    Calculation: $47 \times 3 + 1 = 141 + 1 = 142$.
+    Current number: 142.
+
+*   **Step 9:** 142 is even.
+    Calculation: $142 / 2 = 71$.
+    Current number: 71.
+
+*   **Step 10:** 71 is odd.
+    Calculation: $71 \times 3 + 1 = 213 + 1 = 214$.
+    Current number: 214.
+
+*   **Step 11:** 214 is even.
+    Calculation: $214 / 2 = 107$.
+    Current number: 107.
+
+*   **Step 12:** 107 is odd.
+    Calculation: $107 \times 3 + 1 = 321 + 1 = 322$.
+    Current number: 322.
+
+*   **Step 13:** 322 is even.
+    Calculation: $322 / 2 = 161$.
+    Current number: 161.
+
+*   **Step 14:** 161 is odd.
+    Calculation: $161 \times 3 + 1 = 483 + 1 = 484$.
+    Current number: 484.
+
+*   **Step 15:** 484 is even.
+    Calculation: $484 / 2 = 242$.
+    Current number: 242.
+
+*   **Step 16:** 242 is even.
+    Calculation: $242 / 2 = 121$.
+    Current number: 121.
+
+*   **Step 17:** 121 is odd.
+    Calculation: $121 \times 3 + 1 = 363 + 1 = 364$.
+    Current number: 364.
+
+*   **Step 18:** 364 is even.
+    Calculation: $364 / 2 = 182$.
+    Current number: 182.
+
+*   **Step 19:** 182 is even.
+    Calculation: $182 / 2 = 91$.
+    Current number: 91.
+
+*   **Step 20:** 91 is odd.
+    Calculation: $91 \times 3 + 1 = 273 + 1 = 274$.
+    Current number: 274.
+
+*   **Step 21:** 274 is even.
+    Calculation: $274 / 2 = 137$.
+    Current number: 137.
+
+*   **Step 22:** 137 is odd.
+    Calculation: $137 \times 3 + 1 = 411 + 1 = 412$.
+    Current number: 412.
+
+*   **Step 23:** 412 is even.
+    Calculation: $412 / 2 = 206$.
+    Current number: 206.
+
+*   **Step 24:** 206 is even.
+    Calculation: $206 / 2 = 103$.
+    Current number: 103.
+
+*   **Step 25:** 103 is odd.
+    Calculation: $103 \times 3 + 1 = 309 + 1 = 310$.
+    Current number: 310.
+
+*   **Step 26:** 310 is even.
+    Calculation: $310 / 2 = 155$.
+    Current number: 155.
+
+*   **Step 27:** 155 is odd.
+    Calculation: $155 \times 3 + 1 = 465 + 1 = 466$.
+    Current number: 466.
+
+*   **Step 28:** 466 is even.
+    Calculation: $466 / 2 = 233$.
+    Current number: 233.
+
+*   **Step 29:** 233 is odd.
+    Calculation: $233 \times 3 + 1 = 699 + 1 = 700$.
+    Current number: 700.
+
+*   **Step 30:** 700 is even.
+    Calculation: $700 / 2 = 350$.
+    Current number: 350.
+
+*   **Step 31:** 350 is even.
+    Calculation: $350 / 2 = 175$.
+    Current number: 175.
+
+*   **Step 32:** 175 is odd.
+    Calculation: $175 \times 3 + 1 = 525 + 1 = 526$.
+    Current number: 526.
+
+*   **Step 33:** 526 is even.
+    Calculation: $526 / 2 = 263$.
+    Current number: 263.
+
+*   **Step 34:** 263 is odd.
+    Calculation: $263 \times 3 + 1 = 789 + 1 = 790$.
+    Current number: 790.
+
+*   **Step 35:** 790 is even.
+    Calculation: $790 / 2 = 395$.
+    Current number: 395.
+
+*   **Step 36:** 395 is odd.
+    Calculation: $395 \times 3 + 1 = 1185 + 1 = 1186$.
+    Current number: 1186.
+
+*   **Step 37:** 1186 is even.
+    Calculation: $1186 / 2 = 593$.
+    Current number: 593.
+
+*   **Step 38:** 593 is odd.
+    Calculation: $593 \times 3 + 1 = 1779 + 1 = 1780$.
+    Current number: 1780.
+
+*   **Step 39:** 1780 is even.
+    Calculation: $1780 / 2 = 890$.
+    Current number: 890.
+
+*   **Step 40:** 890 is even.
+    Calculation: $890 / 2 = 445$.
+    Current number: 445.
+
+*   **Step 41:** 445 is odd.
+    Calculation: $445 \times 3 + 1 = 1335 + 1 = 1336$.
+    Current number: 1336.
+
+*   **Step 42:** 1336 is even.
+    Calculation: $1336 / 2 = 668$.
+    Current number: 668.
+
+*   **Step 43:** 668 is even.
+    Calculation: $668 / 2 = 334$.
+    Current number: 334.
+
+*   **Step 44:** 334 is even.
+    Calculation: $334 / 2 = 167$.
+    Current number: 167.
+
+*   **Step 45:** 167 is odd.
+    Calculation: $167 \times 3 + 1 = 501 + 1 = 502$.
+    Current number: 502.
+
+*   **Step 46:** 502 is even.
+    Calculation: $502 / 2 = 251$.
+    Current number: 251.
+
+*   **Step 47:** 251 is odd.
+    Calculation: $251 \times 3 + 1 = 753 + 1 = 754$.
+    Current number: 754.
+
+*   **Step 48:** 754 is even.
+    Calculation: $754 / 2 = 377$.
+    Current number: 377.
+
+*   **Step 49:** 377 is odd.
+    Calculation: $377 \times 3 + 1 = 1131 + 1 = 1132$.
+    Current number: 1132.
+
+*   **Step 50:** 1132 is even.
+    Calculation: $1132 / 2 = 566$.
+    Current number: 566.
+
+*   **Step 51:** 566 is even.
+    Calculation: $566 / 2 = 283$.
+    Current number: 283.
+
+*   **Step 52:** 283 is odd.
+    Calculation: $283 \times 3 + 1 = 849 + 1 = 850$.
+    Current number: 850.
+
+*   **Step 53:** 850 is even.
+    Calculation: $850 / 2 = 425$.
+    Current number: 425.
+
+*   **Step 54:** 425 is odd.
+    Calculation: $425 \times 3 + 1 = 1275 + 1 = 1276$.
+    Current number: 1276.
+
+*   **Step 55:** 1276 is even.
+    Calculation: $1276 / 2 = 638$.
+    Current number: 638.
+
+*   **Step 56:** 638 is even.
+    Calculation: $638 / 2 = 319$.
+    Current number: 319.
+
+*   **Step 57:** 319 is odd.
+    Calculation: $319 \times 3 + 1 = 957 + 1 = 958$.
+    Current number: 958.
+
+*   **Step 58:** 958 is even.
+    Calculation: $958 / 2 = 479$.
+    Current number: 479.
+
+*   **Step 59:** 479 is odd.
+    Calculation: $479 \times 3 + 1 = 1437 + 1 = 1438$.
+    Current number: 1438.
+
+*   **Step 60:** 1438 is even.
+    Calculation: $1438 / 2 = 719$.
+    Current number: 719.
+
+*   **Step 61:** 719 is odd.
+    Calculation: $719 \times 3 + 1 = 2157 + 1 = 2158$.
+    Current number: 2158.
+
+*   **Step 62:** 2158 is even.
+    Calculation: $2158 / 2 = 1079$.
+    Current number: 1079.
+
+*   **Step 63:** 1079 is odd.
+    Calculation: $1079 \times 3 + 1 = 3237 + 1 = 3238$.
+    Current number: 3238.
+
+*   **Step 64:** 3238 is even.
+    Calculation: $3238 / 2 = 1619$.
+    Current number: 1619.
+
+*   **Step 65:** 1619 is odd.
+    Calculation: $1619 \times 3 + 1 = 4857 + 1 = 4858$.
+    Current number: 4858.
+
+*   **Step 66:** 4858 is even.
+    Calculation: $4858 / 2 = 2429$.
+    Current number: 2429.
+
+*   **Step 67:** 2429 is odd.
+    Calculation: $2429 \times 3 + 1 = 7287 + 1 = 7288$.
+    Current number: 7288.
+
+*   **Step 68:** 7288 is even.
+    Calculation: $7288 / 2 = 3644$.
+    Current number: 3644.
+
+*   **Step 69:** 3644 is even.
+    Calculation: $3644 / 2 = 1822$.
+    Current number: 1822.
+
+*   **Step 70:** 1822 is even.
+    Calculation: $1822 / 2 = 911$.
+    Current number: 911.
+
+*   **Step 71:** 911 is odd.
+    Calculation: $911 \times 3 + 1 = 2733 + 1 = 2734$.
+    Current number: 2734.
+
+*   **Step 72:** 2734 is even.
+    Calculation: $2734 / 2 = 1367$.
+    Current number: 1367.
+
+*   **Step 73:** 1367 is odd.
+    Calculation: $1367 \times 3 + 1 = 4101 + 1 = 4102$.
+    Current number: 4102.
+
+*   **Step 74:** 4102 is even.
+    Calculation: $4102 / 2 = 2051$.
+    Current number: 2051.
+
+*   **Step 75:** 2051 is odd.
+    Calculation: $2051 \times 3 + 1 = 6153 + 1 = 6154$.
+    Current number: 6154.
+
+*   **Step 76:** 6154 is even.
+    Calculation: $6154 / 2 = 3077$.
+    Current number: 3077.
+
+*   **Step 77:** 3077 is odd.
+    Calculation: $3077 \times 3 + 1 = 9231 + 1 = 9232$.
+    Current number: 9232.
+
+*   **Step 78:** 9232 is even.
+    Calculation: $9232 / 2 = 4616$.
+    Current number: 4616.
+
+*   **Step 79:** 4616 is even.
+    Calculation: $4616 / 2 = 2308$.
+    Current number: 2308.
+
+*   **Step 80:** 2308 is even.
+    Calculation: $2308 / 2 = 1154$.
+    Current number: 1154.
+
+*   **Step 81:** 1154 is even.
+    Calculation: $1154 / 2 = 577$.
+    Current number: 577.
+
+*   **Step 82:** 577 is odd.
+    Calculation: $577 \times 3 + 1 = 1731 + 1 = 1732$.
+    Current number: 1732.
+
+*   **Step 83:** 1732 is even.
+    Calculation: $1732 / 2 = 866$.
+    Current number: 866.
+
+*   **Step 84:** 866 is even.
+    Calculation: $866 / 2 = 433$.
+    Current number: 433.
+
+*   **Step 85:** 433 is odd.
+    Calculation: $433 \times 3 + 1 = 1299 + 1 = 1300$.
+    Current number: 1300.
+
+*   **Step 86:** 1300 is even.
+    Calculation: $1300 / 2 = 650$.
+    Current number: 650.
+
+*   **Step 87:** 650 is even.
+    Calculation: $650 / 2 = 325$.
+    Current number: 325.
+
+*   **Step 88:** 325 is odd.
+    Calculation: $325 \times 3 + 1 = 975 + 1 = 976$.
+    Current number: 976.
+
+*   **Step 89:** 976 is even.
+    Calculation: $976 / 2 = 488$.
+    Current number: 488.
+
+*   **Step 90:** 488 is even.
+    Calculation: $488 / 2 = 244$.
+    Current number: 244.
+
+*   **Step 91:** 244 is even.
+    Calculation: $244 / 2 = 122$.
+    Current number: 122.
+
+*   **Step 92:** 122 is even.
+    Calculation: $122 / 2 = 61$.
+    Current number: 61.
+
+*   **Step 93:** 61 is odd.
+    Calculation: $61 \times 3 + 1 = 183 + 1 = 184$.
+    Current number: 184.
+
+*   **Step 94:** 184 is even.
+    Calculation: $184 / 2 = 92$.
+    Current number: 92.
+
+*   **Step 95:** 92 is even.
+    Calculation: $92 / 2 = 46$.
+    Current number: 46.
+
+*   **Step 96:** 46 is even.
+    Calculation: $46 / 2 = 23$.
+    Current number: 23.
+
+*   **Step 97:** 23 is odd.
+    Calculation: $23 \times 3 + 1 = 69 + 1 = 70$.
+    Current number: 70.
+
+*   **Step 98:** 70 is even.
+    Calculation: $70 / 2 = 35$.
+    Current number: 35.
+
+*   **Step 99:** 35 is odd.
+    Calculation: $35 \times 3 + 1 = 105 + 1 = 106$.
+    Current number: 106.
+
+*   **Step 100:** 106 is even.
+    Calculation: $106 / 2 = 53$.
+    Current number: 53.
+
+*   **Step 101:** 53 is odd.
+    Calculation: $53 \times 3 + 1 = 159 + 1 = 160$.
+    Current number: 160.
+
+*   **Step 102:** 160 is even.
+    Calculation: $160 / 2 = 80$.
+    Current number: 80.
+
+*   **Step 103:** 80 is even.
+    Calculation: $80 / 2 = 40$.
+    Current number: 40.
+
+*   **Step 104:** 40 is even.
+    Calculation: $40 / 2 = 20$.
+    Current number: 20.
+
+*   **Step 105:** 20 is even.
+    Calculation: $20 / 2 = 10$.
+    Current number: 10.
+
+*   **Step 106:** 10 is even.
+    Calculation: $10 / 2 = 5$.
+    Current number: 5.
+
+*   **Step 107:** 5 is odd.
+    Calculation: $5 \times 3 + 1 = 15 + 1 = 16$.
+    Current number: 16.
+
+*   **Step 108:** 16 is even.
+    Calculation: $16 / 2 = 8$.
+    Current number: 8.
+
+*   **Step 109:** 8 is even.
+    Calculation: $8 / 2 = 4$.
+    Current number: 4.
+
+*   **Step 110:** 4 is even.
+    Calculation: $4 / 2 = 2$.
+    Current number: 2.
+
+*   **Step 111:** 2 is even.
+    Calculation: $2 / 2 = 1$.
+    Current number: 1.
+
+The process stops here as we have reached 1. The total number of steps taken is 111.
+
+ANSWER: 111
+
+===== teams  (exp 35, given 35, OK) =====
+To solve the problem of dividing 8 people into two teams of 4 where the teams are indistinguishable (unlabeled), we can follow these steps:
+
+**Step 1: Calculate the number of ways to choose 4 people for the first team.**
+We have 8 people in total. We need to select 4 people to form the first team. The number of ways to do this is given by the combination formula $\binom{n}{k}$, where $n=8$ and $k=4$.
+$$ \binom{8}{4} = \frac{8!}{4!(8-4)!} = \frac{8!}{4!4!} $$
+Calculating the factorial values:
+$$ 8! = 40320 $$
+$$ 4! = 24 $$
+$$ \binom{8}{4} = \frac{40320}{24 \times 24} = \frac{40320}{576} = 70 $$
+So, there are 70 ways to choose the first group of 4.
+
+**Step 2: Account for the indistinguishability of the teams.**
+Once we have chosen the first team of 4, the remaining 4 people automatically form the second team.
+If the teams were distinguishable (e.g., Team A and Team B), the order in which we formed the teams would matter. We would have:
+1. Chosen Team A (70 ways).
+2. Chosen Team B from the remaining 4 (only 1 way, $\binom{4}{4}=1$).
+Total ways for distinguishable teams = $70 \times 1 = 70$.
+
+However, the problem states that the two teams are **indistinguishable**. This means that the grouping {Team 1, Team 2} is the same as the grouping {Team 2, Team 1}.
+In our calculation above, we counted the pair of teams $\{A, B\}$ and the pair of teams $\{B, A\}$ as two separate outcomes. Since the teams are identical in nature (unlabeled), these two outcomes represent the same division.
+
+Therefore, we must divide the total number of ways calculated for distinguishable teams by the number of ways the two teams can be arranged (which is $2! = 2$).
+
+**Step 3: Perform the final calculation.**
+$$ \text{Number of ways} = \frac{\binom{8}{4}}{2!} = \frac{70}{2} = 35 $$
+
+Alternatively, using the multinomial coefficient formula for partitioning a set into $k$ subsets of sizes $n_1, n_2, \dots, n_k$ where the subsets are indistinguishable:
+$$ \frac{1}{k!} \binom{n}{n_1, n_2, \dots, n_k} $$
+Here $n=8$, $k=2$, and $n_1=n_2=4$.
+$$ \frac{1}{2!} \binom{8}{4, 4} = \frac{1}{2} \times \frac{8!}{4!4!} = \frac{1}{2} \times 70 = 35 $$
+
+ANSWER: 35
+
+===== surj  (exp 1806, given 1806, OK) =====
+To solve the problem of finding the number of ways to distribute 7 distinct books to 3 different students such that each student receives at least one book, we can use the Principle of Inclusion-Exclusion or the Stirling numbers of the second kind.
+
+**Step 1: Calculate the total number of unrestricted distributions.**
+First, consider the scenario where there are no restrictions on the number of books each student receives (some students could receive zero books).
+Since there are 7 distinct books and 3 distinct students, each book has 3 choices (Student A, Student B, or Student C).
+Therefore, the total number of ways to distribute the books without any restrictions is:
+$$3^7$$
+
+Calculating $3^7$:
+$$3^1 = 3$$
+$$3^2 = 9$$
+$$3^3 = 27$$
+$$3^4 = 81$$
+$$3^5 = 243$$
+$$3^6 = 729$$
+$$3^7 = 2187$$
+
+So, there are 2187 total ways to distribute the books.
+
+**Step 2: Subtract the cases where at least one student receives no books.**
+We need to ensure that *each* student receives at least one book. We will subtract the invalid cases from the total.
+The invalid cases are those where at least one student gets 0 books. Let $S$ be the set of all distributions ($|S| = 3^7$).
+Let $A$ be the set of distributions where Student 1 gets 0 books.
+Let $B$ be the set of distributions where Student 2 gets 0 books.
+Let $C$ be the set of distributions where Student 3 gets 0 books.
+
+We want to find $|S| - |A \cup B \cup C|$.
+By the Principle of Inclusion-Exclusion:
+$$|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |A \cap C| + |B \cap C|) + |A \cap B \cap C|$$
+
+**Calculate $|A|$, $|B|$, and $|C|$:**
+If Student 1 gets 0 books, each of the 7 books must go to either Student 2 or Student 3.
+Number of choices per book = 2.
+$$|A| = 2^7 = 128$$
+Similarly, $|B| = 2^7 = 128$ and $|C| = 2^7 = 128$.
+Sum of single sets: $128 + 128 + 128 = 384$.
+
+**Calculate intersections of two sets ($|A \cap B|$, etc.):**
+If Student 1 gets 0 books AND Student 2 gets 0 books, all 7 books must go to Student 3.
+Number of choices per book = 1.
+$$|A \cap B| = 1^7 = 1$$
+Similarly, $|A \cap C| = 1$ and $|B \cap C| = 1$.
+Sum of double intersections: $1 + 1 + 1 = 3$.
+
+**Calculate intersection of three sets ($|A \cap B \cap C|$):**
+If Student 1, 2, and 3 all get 0 books, there are no students to receive the books. This is impossible for 7 books.
+$$|A \cap B \cap C| = 0^7 = 0$$
+
+**Step 3: Apply the Principle of Inclusion-Exclusion formula.**
+$$|A \cup B \cup C| = 384 - 3 + 0 = 381$$
+
+**Step 4: Subtract the invalid cases from the total.**
+Number of valid distributions = Total distributions - Invalid distributions
+$$N = 3^7 - 381$$
+$$N = 2187 - 381$$
+
+Performing the subtraction:
+  2187
+-  381
+-------
+  1806
+
+**Alternative Method: Stirling Numbers of the Second Kind**
+The number of ways to distribute $n$ distinct items into $k$ distinct non-empty boxes is given by $k! \times S(n, k)$, where $S(n, k)$ is the Stirling number of the second kind.
+Here $n=7$ and $k=3$.
+$S(7, 3)$ can be calculated as:
+$$S(7, 3) = \frac{1}{3!} \sum_{j=0}^{3} (-1)^{3-j} \binom{3}{j} j^7$$
+$$S(7, 3) = \frac{1}{6} [ \binom{3}{0}0^7 - \binom{3}{1}1^7 + \binom{3}{2}2^7 - \binom{3}{3}3^7 ]$$
+Wait, the formula for $S(n,k)$ is $\frac{1}{k!} \sum_{j=0}^k (-1)^{k-j} \binom{k}{j} j^n$.
+$$S(7, 3) = \frac{1}{6} [ \binom{3}{3}3^7 - \binom{3}{2}2^7 + \binom{3}{1}1^7 - \binom{3}{0}0^7 ]$$
+$$S(7, 3) = \frac{1}{6} [ 1 \cdot 2187 - 3 \cdot 128 + 3 \cdot 1 - 0 ]$$
+$$S(7, 3) = \frac{1}{6} [ 2187 - 384 + 3 ]$$
+$$S(7, 3) = \frac{1}{6} [ 1806 ]$$
+$$S(7, 3) = 301$$
+
+The number of ways to distribute to *distinct* students is $3! \times S(7, 3)$.
+$$3! \times 301 = 6 \times 301 = 1806$$
+
+Both methods yield the same result.
+
+ANSWER: 1806
+
+===== recur20  (exp 2097151, given 2097151, OK) =====
+To find the value of $a(20)$ for the sequence defined by $a(1) = 3$ and $a(n) = 2a(n-1) + 1$ for $n \ge 2$, we can proceed in two ways: by calculating the first few terms to identify a pattern, or by deriving a closed-form formula.
+
+### Method 1: Identifying the Pattern
+
+Let's calculate the first few terms:
+- $a(1) = 3$
+- $a(2) = 2 \cdot a(1) + 1 = 2(3) + 1 = 7$
+- $a(3) = 2 \cdot a(2) + 1 = 2(7) + 1 = 15$
+- $a(4) = 2 \cdot a(3) + 1 = 2(15) + 1 = 31$
+
+Observing these values:
+- $a(1) = 3 = 2^2 - 1$
+- $a(2) = 7 = 2^3 - 1$
+- $a(3) = 15 = 2^4 - 1$
+- $a(4) = 31 = 2^5 - 1$
+
+It appears that $a(n) = 2^{n+1} - 1$.
+
+Let's verify this hypothesis by induction:
+**Base Case:** For $n=1$, $2^{1+1} - 1 = 2^2 - 1 = 3$. This matches $a(1)$.
+**Inductive Step:** Assume $a(k) = 2^{k+1} - 1$ for some $k \ge 1$.
+Then, $a(k+1) = 2 \cdot a(k) + 1$
+Substitute the assumption:
+$a(k+1) = 2(2^{k+1} - 1) + 1$
+$a(k+1) = 2^{k+2} - 2 + 1$
+$a(k+1) = 2^{k+2} - 1$
+This matches the formula for $n = k+1$.
+
+So, the general formula is $a(n) = 2^{n+1} - 1$.
+
+### Method 2: Solving the Recurrence Relation
+
+The recurrence is $a(n) - 2a(n-1) = 1$.
+This is a linear non-homogeneous recurrence relation.
+The homogeneous part is $a_h(n) = 2a_h(n-1)$, which gives $a_h(n) = C \cdot 2^n$.
+For the particular solution, since the non-homogeneous term is a constant (1), we guess a constant solution $a_p(n) = A$.
+Substituting into the recurrence:
+$A = 2A + 1$
+$-A = 1$
+$A = -1$
+So the general solution is $a(n) = C \cdot 2^n - 1$.
+Using the initial condition $a(1) = 3$:
+$3 = C \cdot 2^1 - 1$
+$4 = 2C$
+$C = 2$
+Thus, $a(n) = 2 \cdot 2^n - 1 = 2^{n+1} - 1$.
+
+### Calculation for $n = 20$
+
+Using the formula $a(n) = 2^{n+1} - 1$:
+$a(20) = 2^{20+1} - 1$
+$a(20) = 2^{21} - 1$
+
+Now, we calculate $2^{21}$:
+We know $2^{10} = 1024$.
+$2^{20} = (2^{10})^2 = 1024^2$.
+$1024 \times 1024 = (1000 + 24)^2 = 1000000 + 2 \cdot 1000 \cdot 24 + 24^2$
+$= 1000000 + 48000 + 576$
+$= 1048576$
+
+So, $2^{20} = 1,048,576$.
+Then $2^{21} = 2 \times 1,048,576 = 2,097,152$.
+
+Finally, subtract 1:
+$a(20) = 2,097,152 - 1 = 2,097,151$.
+
+ANSWER: 2097151
+
+===== digit20fact  (exp 54, given 54, OK) =====
+To find the sum of the decimal digits of $20!$ (20 factorial), we first need to calculate the value of $20!$.
+
+**Step 1: Understand the definition of 20!**
+$20! = 20 \times 19 \times 18 \times \dots \times 1$.
+
+**Step 2: Calculate the value of 20!**
+We can compute this by multiplying the numbers sequentially.
+$1! = 1$
+$2! = 2$
+$3! = 6$
+$4! = 24$
+$5! = 120$
+$6! = 720$
+$7! = 5040$
+$8! = 40320$
+$9! = 362880$
+$10! = 3628800$
+
+Continuing from $10!$:
+$11! = 3628800 \times 11 = 39916800$
+$12! = 39916800 \times 12 = 479001600$
+$13! = 479001600 \times 13 = 6227020800$
+$14! = 6227020800 \times 14 = 87178291200$
+$15! = 87178291200 \times 15 = 1307674368000$
+$16! = 1307674368000 \times 16 = 20922789888000$
+$17! = 20922789888000 \times 17 = 355687428096000$
+$18! = 355687428096000 \times 18 = 6402373705728000$
+$19! = 6402373705728000 \times 19 = 121645100408832000$
+$20! = 121645100408832000 \times 20 = 2432902008176640000$
+
+So, $20! = 2,432,902,008,176,640,000$.
+
+**Step 3: Identify the decimal digits.**
+The number is $2,432,902,008,176,640,000$.
+Let's list the digits:
+2, 4, 3, 2, 9, 0, 2, 0, 0, 8, 1, 7, 6, 6, 4, 0, 0, 0, 0.
+
+**Step 4: Sum the digits.**
+Sum = $2 + 4 + 3 + 2 + 9 + 0 + 2 + 0 + 0 + 8 + 1 + 7 + 6 + 6 + 4 + 0 + 0 + 0 + 0$
+
+Grouping the non-zero digits for easier addition:
+- $2 + 4 = 6$
+- $6 + 3 = 9$
+- $9 + 2 = 11$
+- $11 + 9 = 20$
+- $20 + 2 = 22$
+- $22 + 8 = 30$
+- $30 + 1 = 31$
+- $31 + 7 = 38$
+- $38 + 6 = 44$
+- $44 + 6 = 50$
+- $50 + 4 = 54$
+
+The sum of the digits is 54.
+
+ANSWER: 54

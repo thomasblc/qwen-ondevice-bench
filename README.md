@@ -89,6 +89,8 @@ node probe3.mjs   # graded/conceptual pool
 
 The harness loads models via `@qvac/sdk`. Point `MODELS[].src` at your own GGUF files to run any local models through the same greedy, per-problem, brute-force-graded method.
 
+Raw model outputs (the full chain-of-thought for every problem, per model) are in [`transcripts/`](transcripts/), so you can read exactly what each model produced.
+
 ## Runs on
 
 These models run on-device through the **[QVAC SDK](https://github.com/tetherto/qvac)**, an open-source (Apache 2.0) local AI SDK for JS/TS that runs LLMs, speech, translation, embeddings and more across macOS, Linux, Windows, Android and iOS:

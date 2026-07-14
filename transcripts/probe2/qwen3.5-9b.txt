@@ -1,0 +1,1484 @@
+
+
+===== pairs  (exp 170, given null, WRONG) =====
+To find the number of ordered pairs of positive integers $(a, b)$ with $1 \le a \le 100$ and $1 \le b \le 100$ such that $(a + b)$ divides $(a \cdot b)$, we proceed as follows:
+
+### Step 1: Analyze the divisibility condition
+The condition is:
+$$ \frac{ab}{a+b} = k $$
+where $k$ is an integer.
+
+We can rewrite the expression by dividing the numerator and denominator by $ab$:
+$$ \frac{1}{\frac{a+b}{ab}} = \frac{1}{\frac{1}{b} + \frac{1}{a}} = k $$
+This implies:
+$$ \frac{1}{a} + \frac{1}{b} = \frac{1}{k} $$
+
+Alternatively, let's manipulate the equation algebraically to isolate terms.
+$$ ab = k(a+b) $$
+$$ ab - ka - kb = 0 $$
+Add $k^2$ to both sides to allow factoring:
+$$ ab - ka - kb + k^2 = k^2 $$
+$$ (a-k)(b-k) = k^2 $$
+
+Let $x = a-k$ and $y = b-k$. Then $xy = k^2$.
+Since $a$ and $b$ are positive integers, we must have $a > 0$ and $b > 0$.
+From $a = x+k$ and $b = y+k$, since $k = \frac{ab}{a+b}$, if $a, b \ge 1$, then $k$ must be positive.
+Also, note that if $a=1$, then $b/(1+b) = k \implies b = k + kb \implies b(1-k) = k$. Since $b \ge 1$, $1-k > 0 \implies k < 1$. But $k$ is an integer, so $k=0$, which implies $ab=0$, impossible. Thus $a, b > 1$ generally, or at least the sum $a+b$ is less than the product $ab$ unless one is 1.
+Actually, if $a=1$, $1+b | b \implies 1+b | b - (1+b) = -1$, so $1+b=1 \implies b=0$, not allowed. So $a, b \ge 2$.
+Thus $a-k > 0$ and $b-k > 0$. So $x$ and $y$ are positive integers.
+
+So the problem reduces to finding the number of pairs $(x, y)$ of positive integers such that:
+1. $xy = k^2$ for some positive integer $k$.
+2. $a = x+k \le 100$
+3. $b = y+k \le 100$
+
+Since $xy = k^2$, $x$ and $y$ are divisors of $k^2$. Also, for any divisor $x$ of $k^2$, $y$ is determined as $k^2/x$.
+So we can iterate over possible values of $k$.
+What is the maximum possible value for $k$?
+Since $a, b \ge 2$, $a+b \le 200$. Also $ab \ge 4$.
+From $k = \frac{ab}{a+b}$, we know $k < \frac{ab}{2\sqrt{ab}} = \frac{\sqrt{ab}}{2}$.
+Also $a = x+k, b=y+k$. Since $x,y \ge 1$, $a > k$ and $b > k$.
+Thus $a \le 100 \implies k < 100$. Similarly $b \le 100 \implies k < 100$.
+So $k$ ranges from $1$ to $99$.
+
+### Step 2: Iterate through possible values of $k$
+For a fixed $k$, we need to count the number of divisors $x$ of $k^2$ such that:
+$$ x+k \le 100 \quad \text{and} \quad \frac{k^2}{x} + k \le 100 $$
+Let $f(k)$ be the number of such divisors $x$.
+The conditions are:
+1. $x \le 100 - k$
+2. $x \ge \frac{k^2}{100-k}$ (derived from $\frac{k^2}{x} \le 100-k \implies x \ge \frac{k^2}{100-k}$)
+
+So for a fixed $k$, we need to count the number of divisors of $k^2$ in the interval $[\lceil \frac{k^2}{100-k} \rceil, 100-k]$.
+Note that the interval is valid only if $\lceil \frac{k^2}{100-k} \rceil \le 100-k$.
+Let $M = 100-k$. The condition is $x \in [\frac{k^2}{M}, M]$.
+This requires $\frac{k^2}{M} \le M \implies k^2 \le M^2 \implies k \le M \implies k \le 100-k \implies 2k \le 100 \implies k \le 50$.
+If $k > 50$, then $M < k$, so $M^2 < k^2$, meaning the lower bound $\frac{k^2}{M} > M$. The interval is empty.
+So we only need to check $k$ from $1$ to $50$.
+
+Let's calculate $f(k)$ for $k = 1$ to $50$.
+We need to find the number of divisors of $k^2$ in the range $[L_k, R_k]$ where $L_k = \lceil \frac{k^2}{100-k} \rceil$ and $R_k = 100-k$.
+
+**Case $k=1$:**
+$M = 99$. Range $[ \lceil 1/99 \rceil, 99 ] = [1, 99]$.
+Divisors of $1^2=1$: $\{1\}$.
+Count = 1. (Pair: $a=2, b=2$)
+
+**Case $k=2$:**
+$M = 98$. Range $[ \lceil 4/98 \rceil, 98 ] = [1, 98]$.
+Divisors of $4$: $1, 2, 4$.
+Count = 3.
+
+**Case $k=3$:**
+$M = 97$. Range $[1, 97]$.
+Divisors of $9$: $1, 3, 9$.
+Count = 3.
+
+**Case $k=4$:**
+$M = 96$. Range $[1, 96]$.
+Divisors of $16$: $1, 2, 4, 8, 16$.
+Count = 5.
+
+**Case $k=5$:**
+$M = 95$. Range $[1, 95]$.
+Divisors of $25$: $1, 5, 25$.
+Count = 3.
+
+**Case $k=6$:**
+$M = 94$. Range $[1, 94]$.
+Divisors of $36$: $1, 2, 3, 4, 6, 9, 12, 18, 36$.
+Count = 9.
+
+**Case $k=7$:**
+$M = 93$. Range $[1, 93]$.
+Divisors of $49$: $1, 7, 49$.
+Count = 3.
+
+**Case $k=8$:**
+$M = 92$. Range $[1, 92]$.
+Divisors of $64$: $1, 2, 4, 8, 16, 32, 64$.
+Count = 7.
+
+**Case $k=9$:**
+$M = 91$. Range $[1, 91]$.
+Divisors of $81$: $1, 3, 9, 27, 81$.
+Count = 5.
+
+**Case $k=10$:**
+$M = 90$. Range $[1, 90]$.
+Divisors of $100$: $1, 2, 4, 5, 10, 20, 25, 50, 100$.
+We need divisors $\le 90$. Exclude 100.
+Count = 8.
+
+**Case $k=11$:**
+$M = 89$. Range $[1, 89]$.
+Divisors of $121$: $1, 11, 121$.
+Exclude 121.
+Count = 2.
+
+**Case $k=12$:**
+$M = 88$. Range $[1, 88]$.
+Divisors of $144$: $1, 2, 3, 4, 6, 8, 9, 12, 16, 18, 24, 36, 48, 72, 144$.
+Exclude $>88$: $144$.
+Count = 14.
+
+**Case $k=13$:**
+$M = 87$. Range $[1, 87]$.
+Divisors of $169$: $1, 13, 169$.
+Exclude 169.
+Count = 2.
+
+**Case $k=14$:**
+$M = 86$. Range $[1, 86]$.
+Divisors of $196$: $1, 2, 4, 7, 14, 28, 49, 98, 196$.
+Exclude $>86$: $98, 196$.
+Count = 7.
+
+**Case $k=15$:**
+$M = 85$. Range $[1, 85]$.
+Divisors of $225$: $1, 3, 5, 9, 15, 25, 45, 75, 225$.
+Exclude $>85$: $225$.
+Count = 8.
+
+**Case $k=16$:**
+$M = 84$. Range $[1, 84]$.
+Divisors of $256$: $1, 2, 4, 8, 16, 32, 64, 128, 256$.
+Exclude $>84$: $128, 256$.
+Count = 6.
+
+**Case $k=17$:**
+$M = 83$. Range $[1, 83]$.
+Divisors of $289$: $1, 17, 289$.
+Exclude 289.
+Count = 2.
+
+**Case $k=18$:**
+$M = 82$. Range $[1, 82]$.
+Divisors of $324$: $1, 2, 3, 4, 6, 9, 12, 18, 27, 36, 54, 108, 162, 324$.
+Exclude $>82$: $108, 162, 324$.
+Count = 11.
+
+**Case $k=19$:**
+$M = 81$. Range $[1, 81]$.
+Divisors of $361$: $1, 19, 361$.
+Exclude 361.
+Count = 2.
+
+**Case $k=20$:**
+$M = 80$. Range $[1, 80]$.
+Divisors of $400$: $1, 2, 4, 5, 8, 10, 16, 20, 25, 40, 50, 80, 100, 200, 400$.
+Exclude $>80$: $100, 200, 400$.
+Count = 12.
+
+**Case $k=21$:**
+$M = 79$. Range $[1, 79]$.
+Divisors of $441$: $1, 3, 7, 9, 21, 49, 63, 147, 441$.
+Exclude $>79$: $147, 441$.
+Count = 7.
+
+**Case $k=22$:**
+$M = 78$. Range $[1, 78]$.
+Divisors of $484$: $1, 2, 4, 11, 22, 44, 121, 242, 484$.
+Exclude $>78$: $121, 242, 484$.
+Count = 6.
+
+**Case $k=23$:**
+$M = 77$. Range $[1, 77]$.
+Divisors of $529$: $1, 23, 529$.
+Exclude 529.
+Count = 2.
+
+**Case $k=24$:**
+$M = 76$. Range $[1, 76]$.
+Divisors of $576$: $1, 2, 3, 4, 6, 8, 9, 12, 16, 18, 24, 32, 36, 48, 72, 144, 288, 576$.
+Exclude $>76$: $144, 288, 576$.
+Count = 15.
+
+**Case $k=25$:**
+$M = 75$. Range $[1, 75]$.
+Divisors of $625$: $1, 5, 25, 125, 625$.
+Exclude $>75$: $125, 625$.
+Count = 3.
+
+**Case $k=26$:**
+$M = 74$. Range $[1, 74]$.
+Divisors of $676$: $1, 2, 4, 13, 26, 52, 169, 338, 676$.
+Exclude $>74$: $169, 338, 676$.
+Count = 6.
+
+**Case $k=27$:**
+$M = 73$. Range $[1, 73]$.
+Divisors of $729$: $1, 3, 9, 27, 81, 243, 729$.
+Exclude $>73$: $81, 243, 729$.
+Count = 4.
+
+**Case $k=28$:**
+$M = 72$. Range $[1, 72]$.
+Divisors of $784$: $1, 2, 4, 7, 8, 14, 16, 28, 49, 56, 98, 196, 392, 784$.
+Exclude $>72$: $98, 196, 392, 784$.
+Count = 10.
+
+**Case $k=29$:**
+$M = 71$. Range $[1, 71]$.
+Divisors of $841$: $1, 29, 841$.
+Exclude 841.
+Count = 2.
+
+**Case $k=30$:**
+$M = 70$. Range $[1, 70]$.
+Divisors of $900$: $1, 2, 3, 4, 5, 6, 9, 10, 12, 15, 18, 20, 25, 30, 36, 45, 50, 60, 75, 90, 150, 180, 225, 300, 450, 900$.
+Exclude $>70$: $75, 90, 150, 180, 225, 300, 450, 900$.
+Count = 14.
+
+**Case $k=31$:**
+$M = 69$. Range $[1, 69]$.
+Divisors of $961$: $1, 31, 961$.
+Exclude 961.
+Count = 2.
+
+**Case $k=32$:**
+$M = 68$. Range $[1, 68]$.
+Divisors of $1024$: $1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024$.
+Exclude $>68$: $128, 256, 512, 1024$.
+Count = 6.
+
+**Case $k=33$:**
+$M = 67$. Range $[1, 67]$.
+Divisors of $1089$: $1, 3, 9, 11, 33, 99, 121, 363, 1089$.
+Exclude $>67$: $99, 121, 363, 1089$.
+Count = 5.
+
+**Case $k=34$:**
+$M = 66$. Range $[1, 66]$.
+Divisors of $1156$: $1, 2, 4, 17, 34, 68, 136, 272, 544, 1156$.
+Exclude $>66$: $68, 136, 272, 544, 1156$.
+Count = 5.
+
+**Case $k=35$:**
+$M = 65$. Range $[1, 65]$.
+Divisors of $1225$: $1, 5, 7, 25, 35, 49, 175, 245, 1225$.
+Exclude $>65$: $175, 245, 1225$.
+Count = 6.
+
+**Case $k=36$:**
+$M = 64$. Range $[1, 64]$.
+Divisors of $1296$: $1, 2, 3, 4, 6, 8, 9, 12, 16, 18, 24, 27, 36, 48, 54, 72, 108, 144, 216, 324, 432, 648, 1296$.
+Exclude $>64$: $72, 108, 144, 216, 324, 432, 648, 1296$.
+Count = 15.
+
+**Case $k=37$:**
+$M = 63$. Range $[1, 63]$.
+Divisors of $1369$: $1, 37, 1369$.
+Exclude 1369.
+Count = 2.
+
+**Case $k=38$:**
+$M = 62$. Range $[1, 62]$.
+Divisors of $1444$: $1, 2, 4, 19, 38, 76, 152, 304, 608, 1216, 2432, 4864$? No.
+$38^2 = 1444 = 4 \times 361 = 2^2 \times 19^2$.
+Divisors: $1, 2, 4, 19, 38, 76, 152, 304, 608, 1216, 2432, 4864$? Wait.
+Factors of $2^2 \cdot 19^2$: $(2+1)(2+1)=9$ divisors.
+List: $1, 2, 4, 19, 38, 76, 19^2=361, 2\cdot361=722, 4\cdot361=1444$.
+Divisors: $1, 2, 4, 19, 38, 76, 361, 722, 1444$.
+Exclude $>
+
+===== euler  (exp 14, given null, WRONG) =====
+To solve the problem of finding the number of integers $n$ with $1 \le n \le 100$ such that $f(n) = n^2 + n + 41$ is a composite number, we will proceed step by step.
+
+### Step 1: Analyze the expression for primality
+The expression $n^2 + n + 41$ is a famous quadratic polynomial. It is well-known that this polynomial generates prime numbers for all integer values of $n$ from $0$ to $39$.
+Let's verify this property and determine when it fails (i.e., produces a composite number).
+
+The discriminant of the quadratic $n^2 + n + 41$ is:
+$$ \Delta = b^2 - 4ac = 1^2 - 4(1)(41) = 1 - 164 = -163 $$
+Since the discriminant is negative, the quadratic has no real roots and never equals zero for real $n$. Thus, $n^2 + n + 41$ is never $0$. Since $n \ge 1$, the value is always positive.
+
+A number is composite if it has a divisor other than 1 and itself.
+Let's test small values of $n$:
+- $n=1$: $1^2 + 1 + 41 = 43$ (Prime)
+- $n=2$: $2^2 + 2 + 41 = 47$ (Prime)
+- ...
+- $n=40$: $40^2 + 40 + 41 = 1600 + 40 + 41 = 1681$.
+  Let's check if 1681 is prime. Note that $1681 = 41^2$.
+  So, for $n=40$, the value is $41^2$, which is composite.
+
+### Step 2: Determine the condition for compositeness
+We are looking for $n$ such that $n^2 + n + 41$ is composite.
+Consider the value of the expression modulo 41.
+$$ n^2 + n + 41 \equiv n^2 + n \pmod{41} $$
+$$ n^2 + n + 41 \equiv n(n+1) \pmod{41} $$
+
+If $n(n+1)$ is a multiple of 41, then $n^2 + n + 41$ is divisible by 41.
+Since $n$ and $n+1$ are consecutive integers, they are coprime. Therefore, for their product to be divisible by the prime 41, either $n$ must be a multiple of 41 or $n+1$ must be a multiple of 41.
+
+Case A: $n \equiv 0 \pmod{41}$
+This means $n$ can be $41, 82, 123, \dots$
+Within the range $1 \le n \le 100$, the possible values are $n = 41$ and $n = 82$.
+Let's check $n=41$:
+$f(41) = 41^2 + 41 + 41 = 41(41 + 1 + 1) = 41 \times 43$. This is composite.
+Let's check $n=82$:
+$f(82) = 82^2 + 82 + 41 = 82(82+1) + 41 = 82 \times 83 + 41 = 41 \times 2 \times 83 + 41 \times 1 = 41(166+1) = 41 \times 167$. This is composite.
+
+Case B: $n+1 \equiv 0 \pmod{41}$
+This means $n \equiv -1 \equiv 40 \pmod{41}$.
+This means $n$ can be $40, 81, 122, \dots$
+Within the range $1 \le n \le 100$, the possible values are $n = 40$ and $n = 81$.
+Let's check $n=40$:
+$f(40) = 40^2 + 40 + 41 = 1600 + 40 + 41 = 1681 = 41^2$. This is composite.
+Let's check $n=81$:
+$f(81) = 81^2 + 81 + 41 = 81(81+1) + 41 = 81 \times 82 + 41 = (41-1)(41+1) \times 2 + 41$? No, simpler:
+$f(81) = 81^2 + 81 + 41$. Since $81 \equiv -1 \pmod{41}$, $81^2 \equiv 1$, $81 \equiv -1$.
+$f(81) \equiv 1 + (-1) + 0 \equiv 0 \pmod{41}$.
+So $f(81)$ is divisible by 41.
+$f(81) = 6561 + 81 + 41 = 6683$.
+$6683 / 41 = 163$. So $f(81) = 41 \times 163$. This is composite.
+
+### Step 3: Verify if there are other cases
+Is it possible for $n^2 + n + 41$ to be composite without being divisible by 41?
+Yes, for example, if the result is a multiple of 2, 3, 5, etc.
+However, let's look at the known property of this polynomial.
+It is a known result that $n^2 + n + 41$ is prime for all integers $n$ such that $0 \le n < 40$.
+Proof sketch: If $n^2 + n + 41$ were composite for some $0 \le n < 40$, it would have a prime factor $p \le \sqrt{n^2+n+41} < \sqrt{40^2+40+41} = \sqrt{1681} = 41$.
+If $p$ divides $n^2+n+41$, then $n^2+n+41 \equiv 0 \pmod p$.
+This implies $4(n^2+n+41) = (2n+1)^2 + 163 \equiv 0 \pmod p$, so $(2n+1)^2 \equiv -163 \pmod p$.
+This requires $-163$ to be a quadratic residue modulo $p$.
+For small primes $p < 41$, we can check if $-163$ is a quadratic residue.
+Actually, the standard theorem states that this polynomial produces primes for $n=0, 1, \dots, 39$.
+Let's double check $n=40$ to $100$.
+We found that for $n \equiv 0, 40 \pmod{41}$, the number is divisible by 41.
+Are there any $n$ in $1 \le n \le 100$ where $n^2+n+41$ is composite but NOT divisible by 41?
+Let's test a few values not congruent to 0 or 40 mod 41.
+$n=1$: 43 (Prime)
+$n=2$: 47 (Prime)
+...
+$n=39$: $39^2+39+41 = 1521+39+41 = 1601$. Is 1601 prime? $\sqrt{1601} \approx 40$. Primes to check: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37.
+1601 not div by 2, 3 (sum=8), 5.
+$1601 = 7 \times 228 + 5$.
+$1601 = 11 \times 145 + 6$.
+$1601 = 13 \times 123 + 2$.
+$1601 = 17 \times 94 + 3$.
+$1601 = 19 \times 84 + 5$.
+$1601 = 23 \times 69 + 14$.
+$1601 = 29 \times 55 + 6$.
+$1601 = 31 \times 51 + 20$.
+$1601 = 37 \times 43 + 10$.
+So 1601 is prime.
+
+What about $n=42$?
+$n=42 \equiv 1 \pmod{41}$.
+$f(42) = 42^2 + 42 + 41 = 1764 + 42 + 41 = 1847$.
+Is 1847 prime? $\sqrt{1847} \approx 43$.
+Check divisibility by primes up to 43.
+Not 2, 3 (sum=20), 5.
+$1847 = 7 \times 263 + 6$.
+$1847 = 11 \times 167 + 10$.
+$1847 = 13 \times 142 + 1$.
+$1847 = 17 \times 108 + 11$.
+$1847 = 19 \times 97 + 4$.
+$1847 = 23 \times 80 + 7$.
+$1847 = 29 \times 63 + 20$.
+$1847 = 31 \times 59 + 18$.
+$1847 = 37 \times 49 + 34$.
+$1847 = 41 \times 45 + 2$.
+$1847 = 43 \times 42 + 41$.
+It seems 1847 is prime.
+
+It is a known mathematical fact that $n^2+n+41$ is prime for all integers $n$ such that $0 \le n < 40$.
+Furthermore, for $n \ge 40$, the values are composite if and only if they are divisible by 41?
+Let's re-evaluate.
+If $n^2+n+41$ is composite, it must have a prime factor $p$.
+If $p=41$, then $n \equiv 0$ or $40 \pmod{41}$.
+If $p \neq 41$, could it happen?
+Consider $n=42$. We checked 1847 and it seemed prime.
+Consider $n=43$. $43 \equiv 2 \pmod{41}$.
+$f(43) = 43^2 + 43 + 41 = 1849 + 43 + 41 = 1933$.
+$\sqrt{1933} \approx 44$.
+Check primes: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43.
+Sum digits $1+9+3+3=16$ (not 3). Ends in 3 (not 5).
+$1933 = 7 \times 276 + 1$.
+$1933 = 11 \times 175 + 8$.
+$1933 = 13 \times 148 + 9$.
+$1933 = 17 \times 113 + 12$.
+$1933 = 19 \times 101 + 14$.
+$1933 = 23 \times 84 + 1$.
+$1933 = 29 \times 66 + 19$.
+$1933 = 31 \times 62 + 11$.
+$1933 = 37 \times 52 + 9$.
+$1933 = 41 \times 47 + 6$.
+$1933 = 43 \times 44 + 41$.
+Seems prime.
+
+Actually, the sequence of values generated by $n^2+n+41$ for $n=0, 1, \dots, 39$ are all primes.
+For $n=40$, it is $41^2$ (composite).
+For $n=41$, it is $41 \times 43$ (composite).
+For $n=42$, it is prime.
+For $n=43$, it is prime.
+...
+For $n=80$, $80 \equiv -1 \pmod{41}$? No, $80 = 2 \times 41 - 2 \equiv -2$.
+Wait, $80 \equiv -1 \pmod{41}$ is false. $80 = 41 + 39 \equiv 39 \equiv -2$.
+The condition for divisibility by 41 is $n \equiv 0$ or $n \equiv -1 \pmod{41}$.
+So $n \in \{40, 41, 81, 82\}$ in the range $1 \le n \le 100$.
+Are there any other composite numbers in this range?
+Let's check $n=1$ to $39$. All are prime.
+Let's check $n=40, 41, 81, 82$. All are divisible by 41, hence composite.
+What about $n=83$? $83 \equiv 1 \pmod{41}$. Same as $n=1$ shifted?
+$f(n+41) = (n+41)^2 + (n+41) + 41 = n^2 + 82n + 1681 + n + 41 + 41 = n^2 + n + 41 + 82n + 1763$.
+This doesn't preserve primality directly.
+However, it is a known property that the only composite values generated by $n^2+n+41$ for $n \ge 0$ occur when $n \equiv 0 \pmod{41}$ or $n \equiv -1 \pmod{41}$?
+Let's verify this hypothesis.
+If $n^2+n+41$ is composite, does it imply $41 | (n^2+n+41)$?
+Suppose $p | (n^2+n+41)$ with $p < 41$.
+Then $n^2+n+41 \equiv 0 \pmod p$.
+$(2n+1)^2 + 163 \equiv 0 \pmod p$.
+$(2n+1)^2 \equiv -163 \pmod p$.
+For $p=2$: $1 \equiv -163 \equiv 1 \pmod 2$. Always true.
+But $n^2+n+41$ is always odd (since $n^2+n$ is even, $+41$ is odd). So never divisible by 2.
+For $p=3$: $n^2+n+41 \equiv n^2+n+2 \pmod 3$.
+If $n \equiv 0 \implies 2$.
+If $n \equiv 1 \implies 1+1+2=4 \equiv 1$.
+If $n \equiv 2 \implies 4+2+2=8 \equiv 2$.
+Never 0 mod 3.
+For $p=5$: $n^2+n+1 \pmod 5$.
+$n=0 \to 1$.
+$n=1 \to 3$.
+$n=2 \to 4+2+1=7 \equiv 2$.
+$n=3 \to 9+3+1=13 \equiv 3$.
+$n=4 \to 16+4+1=21 \equiv 1$.
+Never 0 mod 5.
+For $p=7$: $n^2+n+41 \equiv n^2+n+6 \pmod 7$.
+Discriminant $1-24 = -23 \equiv 2$. Is 2 a quadratic residue mod 7? Squares: 1, 4, 2. Yes ($3^2=9\equiv 2$).
+So solutions exist.
+Let's find $n$ such that $n^2+n+6 \equiv 0 \pmod 7$.
+$n^2+n+6 = (n-2)(n+3) + 0$? No.
+Roots of $x^2+x+6=0$ mod 7.
+Try $n=2: 4+2+6=12 \equiv 5$.
+Try $n=3: 9+3+6=18 \equiv 4$.
+Try $n=4: 16+4+6=26 \equiv 5$.
+Try $n=5: 25+5+6=36 \equiv 1$.
+Try $n=6: 36+6+6=48 \equiv 6$.
+Try $n=1: 1+1+6=8 \equiv 1$.
+Try $n=0: 6$.
+Wait, did I calculate squares wrong?
+Squares mod 7: $0, 1, 4, 2$.
+Values of $n^2+n$:
+0: 0
+1: 2
+2: 6
+3: 12=5
+4: 20=6
+5: 30=2
+6: 42=0
+Add 6:
+0: 6
+1: 8=1
+2: 12=5
+3: 11=4
+4: 12=5
+5: 8=1
+6: 6
+None are 0. So no solution mod 7.
+
+Let's check $p=11$. $n^2+n+41 \equiv n^2+n+8 \pmod{11}$.
+Discriminant $1-32 = -31 \equiv 2$.
+Squares mod 11: 1, 4, 9, 5, 3. (1, 4, 9, 16=5, 25=3).
+2 is not a square mod 11. No solution.
+
+Let's check $p=13$. $n^2+n+41 \equiv n^2+n+2 \pmod{13}$.
+Discriminant $1-8 = -7 \equiv 6$.
+Squares mod 13: 1, 4, 9, 3, 12, 10. (1, 4, 9, 16=3, 25=12, 36=10).
+6 is not a square. No solution.
+
+Let's check $p=17$. $n^2+n+41 \equiv n^2+n+7 \pmod{17}$.
+Discriminant $1-28 = -27 \equiv 7$.
+Squares mod 17: 1, 4, 9, 16, 8, 2, 15, 13. (1, 4, 9, 16, 25=8, 36=2, 49=15, 64=13).
+7 is not a square. No solution.
+
+Let's check $p=19$. $n^2+n+41 \equiv n^2+n+3 \pmod{19}$.
+Discriminant $1-12 = -11 \equiv 8$.
+Squares mod 19: 1, 4, 9, 16, 6, 17, 11, 7, 5. (1, 4, 9, 16, 25=6, 36=17, 49=11, 64=7, 81=5).
+8 is not a square. No solution.
+
+Let's check $p=23$. $n^2+n+41 \equiv n^2+n+18 \pmod{23}$.
+Discriminant $1-72 = -71 \equiv 12$.
+Squares mod 23: 1, 4, 9, 16, 2, 13, 3, 18, 12, 8, 6. (1, 4, 9, 16, 25=2, 36=13, 49=3, 64=18, 81=12, 100=8, 121=6).
+12 IS a square ($12^2 = 144 = 6 \times 23 + 6$?
+
+===== fib  (exp 75, given 995, WRONG) =====
+To find the remainder when $F(100)$ is divided by $1000$, we need to compute the Fibonacci number $F(100) \pmod{1000}$.
+
+The sequence is defined as:
+$F(1) = 1$
+$F(2) = 1$
+$F(n) = F(n-1) + F(n-2)$ for $n \ge 3$.
+
+We are looking for $F(100) \pmod{1000}$.
+Since $1000 = 8 \times 125$, and $\gcd(8, 125) = 1$, we can compute $F(100) \pmod 8$ and $F(100) \pmod{125}$ separately, and then combine the results using the Chinese Remainder Theorem.
+
+### Step 1: Compute $F(100) \pmod 8$
+
+Let's list the Fibonacci numbers modulo 8:
+$F(1) = 1$
+$F(2) = 1$
+$F(3) = 2$
+$F(4) = 3$
+$F(5) = 5$
+$F(6) = 8 \equiv 0$
+$F(7) = 5$
+$F(8) = 5$
+$F(9) = 10 \equiv 2$
+$F(10) = 7$
+$F(11) = 9 \equiv 1$
+$F(12) = 8 \equiv 0$
+$F(13) = 1$
+$F(14) = 1$
+
+The sequence repeats from $F(13), F(14)$ which are $1, 1$, same as $F(1), F(2)$.
+The period (Pisano period) modulo 8 is $\pi(8) = 12$.
+We need $F(100) \pmod 8$.
+$100 = 12 \times 8 + 4$.
+So, $F(100) \equiv F(4) \pmod 8$.
+From our list, $F(4) = 3$.
+Thus, $F(100) \equiv 3 \pmod 8$.
+
+### Step 2: Compute $F(100) \pmod{125}$
+
+We need to find the period modulo 125.
+The period modulo $5^k$ is $4 \times 5^k$.
+For $k=3$ (since $125 = 5^3$), the period is $4 \times 125 = 500$.
+So $\pi(125) = 500$.
+We need $F(100) \pmod{125}$. Since $100 < 500$, we just calculate the value directly or use properties.
+Calculating up to 100 manually is tedious, but we can use the property that $F(n)$ grows exponentially. Let's compute iteratively or use a shortcut if possible.
+Actually, let's just compute the sequence modulo 125 carefully.
+
+$F(1)=1, F(2)=1$
+$F(3)=2$
+$F(4)=3$
+$F(5)=5$
+$F(6)=8$
+$F(7)=13$
+$F(8)=21$
+$F(9)=34$
+$F(10)=55$
+$F(11)=89$
+$F(12)=144 \equiv 19$
+$F(13)=108$
+$F(14)=127 \equiv 2$
+$F(15)=110$
+$F(16)=112$
+$F(17)=222 \equiv 97$
+$F(18)=209 \equiv 84$
+$F(19)=181 \equiv 56$
+$F(20)=140 \equiv 15$
+$F(21)=71$
+$F(22)=86$
+$F(23)=157 \equiv 32$
+$F(24)=118$
+$F(25)=150 \equiv 25$
+$F(26)=143$
+$F(27)=168 \equiv 43$
+$F(28)=186 \equiv 61$
+$F(29)=104$
+$F(30)=165 \equiv 40$
+$F(31)=144 \equiv 19$
+$F(32)=59$
+$F(33)=78$
+$F(34)=137 \equiv 12$
+$F(35)=90$
+$F(36)=102$
+$F(37)=192 \equiv 67$
+$F(38)=169 \equiv 44$
+$F(39)=111$
+$F(40)=155 \equiv 30$
+$F(41)=141$
+$F(42)=171 \equiv 46$
+$F(43)=187 \equiv 62$
+$F(44)=108$
+$F(45)=170 \equiv 45$
+$F(46)=113$
+$F(47)=158 \equiv 33$
+$F(48)=146 \equiv 21$
+$F(49)=54$
+$F(50)=75$
+$F(51)=129 \equiv 4$
+$F(52)=79$
+$F(53)=83$
+$F(54)=162 \equiv 37$
+$F(55)=120$
+$F(56)=157 \equiv 32$
+$F(57)=152 \equiv 27$
+$F(58)=59$
+$F(59)=86$
+$F(60)=145 \equiv 20$
+$F(61)=106$
+$F(62)=126 \equiv 1$
+$F(63)=107$
+$F(64)=108$
+$F(65)=215 \equiv 90$
+$F(66)=198 \equiv 73$
+$F(67)=163 \equiv 38$
+$F(68)=111$
+$F(69)=149 \equiv 24$
+$F(70)=135 \equiv 10$
+$F(71)=34$
+$F(72)=44$
+$F(73)=78$
+$F(74)=122$
+$F(75)=200 \equiv 75$
+$F(76)=197 \equiv 72$
+$F(77)=147 \equiv 22$
+$F(78)=94$
+$F(79)=116$
+$F(80)=210 \equiv 85$
+$F(81)=199 \equiv 74$
+$F(82)=159 \equiv 34$
+$F(83)=108$
+$F(84)=142 \equiv 17$
+$F(85)=125 \equiv 0$
+$F(86)=17$
+$F(87)=17$
+$F(88)=34$
+$F(89)=51$
+$F(90)=85$
+$F(91)=136 \equiv 11$
+$F(92)=96$
+$F(93)=107$
+$F(94)=203 \equiv 78$
+$F(95)=185 \equiv 60$
+$F(96)=138$
+$F(97)=198 \equiv 73$
+$F(98)=211 \equiv 86$
+$F(99)=159 \equiv 34$
+$F(100)=120$
+
+Let me double check the calculation around $F(85)$.
+$F(84) = 17$.
+$F(85) = 17 + 108 = 125 \equiv 0$. Correct.
+$F(86) = 0 + 17 = 17$.
+$F(87) = 17 + 0 = 17$.
+$F(88) = 17 + 17 = 34$.
+$F(89) = 34 + 17 = 51$.
+$F(90) = 51 + 34 = 85$.
+$F(91) = 85 + 51 = 136 \equiv 11$.
+$F(92) = 11 + 85 = 96$.
+$F(93) = 96 + 11 = 107$.
+$F(94) = 107 + 96 = 203 \equiv 78$.
+$F(95) = 78 + 107 = 185 \equiv 60$.
+$F(96) = 60 + 78 = 138$.
+$F(97) = 138 + 60 = 198 \equiv 73$.
+$F(98) = 73 + 138 = 211 \equiv 86$.
+$F(99) = 86 + 73 = 159 \equiv 34$.
+$F(100) = 34 + 86 = 120$.
+
+So, $F(100) \equiv 120 \pmod{125}$.
+
+### Step 3: Combine using Chinese Remainder Theorem
+
+We have the system:
+1. $x \equiv 3 \pmod 8$
+2. $x \equiv 120 \pmod{125}$
+
+From (2), $x = 125k + 120$ for some integer $k$.
+Substitute into (1):
+$125k + 120 \equiv 3 \pmod 8$
+Note that $125 = 15 \times 8 + 5 \equiv 5 \pmod 8$.
+And $120 = 15 \times 8 \equiv 0 \pmod 8$.
+So, $5k + 0 \equiv 3 \pmod 8$.
+$5k \equiv 3 \pmod 8$.
+Multiply by 5 (the inverse of 5 mod 8, since $5 \times 5 = 25 \equiv 1$):
+$25k \equiv 15 \pmod 8$
+$k \equiv 7 \pmod 8$.
+
+So $k = 8m + 7$.
+Substitute back into the expression for $x$:
+$x = 125(8m + 7) + 120$
+$x = 1000m + 875 + 120$
+$x = 1000m + 995$
+
+Thus, $x \equiv 995 \pmod{1000}$.
+
+Let's verify.
+$995 \div 8 = 124$ remainder $3$. ($124 \times 8 = 992$, $995-992=3$). Correct.
+$995 \div 125 = 7$ remainder $120$. ($7 \times 125 = 875$, $995-875=120$). Correct.
+
+The remainder when $F(100)$ is divided by $1000$ is $995$.
+
+ANSWER: 995
+
+===== walk  (exp 120, given null, WRONG) =====
+To solve this problem, we need to find the number of valid sequences of 10 moves that satisfy the given conditions.
+
+**Step 1: Define the variables and equations.**
+Let $n$ be the total number of moves, which is given as $n = 10$.
+Let $x$ be the number of moves of type $+2$.
+Let $y$ be the number of moves of type $-1$.
+
+The total number of moves is:
+$x + y = 10$
+
+The final position starts at 0. After $x$ moves of $+2$ and $y$ moves of $-1$, the final position is:
+$2x - 1y = 8$
+
+**Step 2: Solve the system of linear equations.**
+We have:
+1) $x + y = 10 \implies y = 10 - x$
+2) $2x - y = 8$
+
+Substitute (1) into (2):
+$2x - (10 - x) = 8$
+$2x - 10 + x = 8$
+$3x = 18$
+$x = 6$
+
+Now find $y$:
+$y = 10 - 6 = 4$
+
+So, any valid sequence must consist of exactly 6 moves of $+2$ and 4 moves of $-1$.
+
+**Step 3: Analyze the constraints.**
+The constraints are:
+1. The position must never be negative after any move.
+2. The sequence must end at position 8.
+
+Let the sequence of moves be $m_1, m_2, \dots, m_{10}$, where $m_i \in \{+2, -1\}$.
+Let $P_k$ be the position after $k$ moves. $P_0 = 0$.
+$P_k = P_{k-1} + m_k$.
+Condition: $P_k \ge 0$ for all $1 \le k \le 10$.
+
+Since the final position is 8 and the total displacement is $6(+2) + 4(-1) = 12 - 4 = 8$, we just need to count the permutations of these 6 $+2$s and 4 $-1$s such that the partial sums are non-negative.
+
+**Step 4: Use a combinatorial approach (Reflection Principle or Direct Counting).**
+Let's denote $+2$ as an "up" step and $-1$ as a "down" step.
+This is not a standard simple random walk (steps of +1 and -1) because the step sizes are different. However, we can analyze the condition $P_k \ge 0$.
+
+Let's try to construct the sequences or use a generalized reflection principle.
+The condition $P_k \ge 0$ means that at any point, the cumulative sum of $+2$s minus the cumulative sum of $-1$s must be non-negative.
+Let $u_k$ be the number of $+2$ moves in the first $k$ steps, and $d_k$ be the number of $-1$ moves in the first $k$ steps.
+Then $P_k = 2u_k - d_k$.
+We require $2u_k - d_k \ge 0$ for all $k$.
+Also, $u_k + d_k = k$.
+Substituting $d_k = k - u_k$:
+$2u_k - (k - u_k) \ge 0$
+$3u_k - k \ge 0$
+$3u_k \ge k$
+$u_k \ge \lceil k/3 \rceil$
+
+So, at step $k$, we must have at least $\lceil k/3 \rceil$ moves of type $+2$.
+
+Let's list the minimum required number of $+2$ moves ($u_k$) for each step $k$ from 1 to 10:
+$k=1: u_1 \ge 1/3 \implies u_1 \ge 1$ (Must start with +2)
+$k=2: u_2 \ge 2/3 \implies u_2 \ge 1$
+$k=3: u_3 \ge 1 \implies u_3 \ge 1$
+$k=4: u_4 \ge 4/3 \implies u_4 \ge 2$
+$k=5: u_5 \ge 5/3 \implies u_5 \ge 2$
+$k=6: u_6 \ge 2 \implies u_6 \ge 2$
+$k=7: u_7 \ge 7/3 \implies u_7 \ge 3$
+$k=8: u_8 \ge 8/3 \implies u_8 \ge 3$
+$k=9: u_9 \ge 3 \implies u_9 \ge 3$
+$k=10: u_{10} = 6$ (Fixed total)
+
+Let's verify the condition $2u_k - d_k \ge 0$ again.
+If $u_k = \lceil k/3 \rceil$, then $d_k = k - \lceil k/3 \rceil = \lfloor 2k/3 \rfloor$.
+$2u_k - d_k = 2\lceil k/3 \rceil - \lfloor 2k/3 \rfloor$.
+Let's check specific values:
+$k=1: 2(1) - 0 = 2 \ge 0$. OK.
+$k=2: 2(1) - 1 = 1 \ge 0$. OK.
+$k=3: 2(1) - 2 = 0 \ge 0$. OK.
+$k=4: 2(2) - 2 = 2 \ge 0$. OK.
+$k=5: 2(2) - 3 = 1 \ge 0$. OK.
+$k=6: 2(2) - 4 = 0 \ge 0$. OK.
+$k=7: 2(3) - 4 = 2 \ge 0$. OK.
+$k=8: 2(3) - 5 = 1 \ge 0$. OK.
+$k=9: 2(3) - 6 = 0 \ge 0$. OK.
+$k=10: 2(6) - 4 = 8 \ge 0$. OK.
+
+So the condition is equivalent to $u_k \ge \lceil k/3 \rceil$ for all $k=1 \dots 10$, with $u_{10}=6$.
+We need to count the number of integer sequences $u_1, u_2, \dots, u_{10}$ such that:
+1. $0 \le u_k \le u_{k+1} \le 6$ (since $u_k$ is cumulative count of +2s, it is non-decreasing and bounded by total 6).
+2. $u_k \ge \lceil k/3 \rceil$.
+3. $u_{10} = 6$.
+
+Actually, $u_k$ represents the number of $+2$ moves in the first $k$ steps. The sequence of moves is determined by the positions where the $+2$ moves occur.
+Let the positions of the $+2$ moves be $p_1, p_2, \dots, p_6$ where $1 \le p_1 < p_2 < \dots < p_6 \le 10$.
+The condition $u_k \ge \lceil k/3 \rceil$ means that in the first $k$ steps, there are at least $\lceil k/3 \rceil$ $+2$ moves.
+This is equivalent to saying that the $j$-th $+2$ move must occur at or before step $3j$.
+Why?
+If the $j$-th $+2$ move occurs at step $p_j$, then for any $k < p_j$, the number of $+2$ moves is $j-1$.
+The condition requires $u_k \ge \lceil k/3 \rceil$.
+Suppose $k = 3j - 1$. Then $\lceil k/3 \rceil = j$.
+So we need $u_{3j-1} \ge j$.
+This implies that by step $3j-1$, we must have already made $j$ moves of type $+2$.
+Therefore, the $j$-th $+2$ move must happen at or before step $3j-1$.
+So, $p_j \le 3j - 1$.
+
+Let's check this logic for $j=1, 2, 3, 4, 5, 6$.
+$j=1: p_1 \le 3(1)-1 = 2$.
+$j=2: p_2 \le 3(2)-1 = 5$.
+$j=3: p_3 \le 3(3)-1 = 8$.
+$j=4: p_4 \le 3(4)-1 = 11$. Since max step is 10, $p_4 \le 10$.
+$j=5: p_5 \le 3(5)-1 = 14 \implies p_5 \le 10$.
+$j=6: p_6 \le 3(6)-1 = 17 \implies p_6 \le 10$.
+
+Also, we know $p_1 < p_2 < p_3 < p_4 < p_5 < p_6$ and $1 \le p_i \le 10$.
+The constraints are:
+$1 \le p_1 \le 2$
+$p_1 < p_2 \le 5$
+$p_2 < p_3 \le 8$
+$p_3 < p_4 \le 10$
+$p_4 < p_5 \le 10$
+$p_5 < p_6 \le 10$
+
+Let's count the number of such sequences $(p_1, \dots, p_6)$.
+We can do this by iterating through possible values or using a recursive counting method.
+
+Let $N(k, m)$ be the number of ways to choose $k$ positions for the remaining $+2$ moves from the available slots, satisfying the upper bound constraints.
+Actually, let's just build it step by step.
+
+**Case 1: $p_1 = 1$**
+Remaining to choose: $p_2, p_3, p_4, p_5, p_6$ from $\{2, \dots, 10\}$.
+Constraints:
+$p_2 \le 5$
+$p_3 \le 8$
+$p_4 \le 10$
+$p_5 \le 10$
+$p_6 \le 10$
+And $1 < p_2 < p_3 < p_4 < p_5 < p_6$.
+
+Subcase 1.1: $p_2 = 2$
+Need $p_3, p_4, p_5, p_6$ from $\{3, \dots, 10\}$ with $p_3 \le 8$.
+Subcase 1.1.1: $p_3 = 3$
+Need $p_4, p_5, p_6$ from $\{4, \dots, 10\}$ with $p_4 \le 10$ (always true), $p_5 \le 10$, $p_6 \le 10$.
+Basically choose 3 from $\{4, \dots, 10\}$ (7 items). $\binom{7}{3} = 35$.
+Subcase 1.1.2: $p_3 = 4$
+Choose 3 from $\{5, \dots, 10\}$ (6 items). $\binom{6}{3} = 20$.
+Subcase 1.1.3: $p_3 = 5$
+Choose 3 from $\{6, \dots, 10\}$ (5 items). $\binom{5}{3} = 10$.
+Subcase 1.1.4: $p_3 = 6$
+Choose 3 from $\{7, \dots, 10\}$ (4 items). $\binom{4}{3} = 4$.
+Subcase 1.1.5: $p_3 = 7$
+Choose 3 from $\{8, \dots, 10\}$ (3 items). $\binom{3}{3} = 1$.
+Subcase 1.1.6: $p_3 = 8$
+Choose 3 from $\{9, \dots, 10\}$ (2 items). Impossible ($\binom{2}{3}=0$).
+Sum for $p_2=2$: $35 + 20 + 10 + 4 + 1 = 70$.
+
+Subcase 1.2: $p_2 = 3$
+Need $p_3, p_4, p_5, p_6$ from $\{4, \dots, 10\}$ with $p_3 \le 8$.
+Subcase 1.2.1: $p_3 = 4$
+Choose 3 from $\{5, \dots, 10\}$ (6 items). $\binom{6}{3} = 20$.
+Subcase 1.2.2: $p_3 = 5$
+Choose 3 from $\{6, \dots, 10\}$ (5 items). $\binom{5}{3} = 10$.
+Subcase 1.2.3: $p_3 = 6$
+Choose 3 from $\{7, \dots, 10\}$ (4 items). $\binom{4}{3} = 4$.
+Subcase 1.2.4: $p_3 = 7$
+Choose 3 from $\{8, \dots, 10\}$ (3 items). $\binom{3}{3} = 1$.
+Sum for $p_2=3$: $20 + 10 + 4 + 1 = 35$.
+
+Subcase 1.3: $p_2 = 4$
+Need $p_3, p_4, p_5, p_6$ from $\{5, \dots, 10\}$ with $p_3 \le 8$.
+Subcase 1.3.1: $p_3 = 5$
+Choose 3 from $\{6, \dots, 10\}$ (5 items). $\binom{5}{3} = 10$.
+Subcase 1.3.2: $p_3 = 6$
+Choose 3 from $\{7, \dots, 10\}$ (4 items). $\binom{4}{3} = 4$.
+Subcase 1.3.3: $p_3 = 7$
+Choose 3 from $\{8, \dots, 10\}$ (3 items). $\binom{3}{3} = 1$.
+Sum for $p_2=4$: $10 + 4 + 1 = 15$.
+
+Subcase 1.4: $p_2 = 5$
+Need $p_3, p_4, p_5, p_6$ from $\{6, \dots, 10\}$ with $p_3 \le 8$.
+Subcase 1.4.1: $p_3 = 6$
+Choose 3 from $\{7, \dots, 10\}$ (4 items). $\binom{4}{3} = 4$.
+Subcase 1.4.2: $p_3 = 7$
+Choose 3 from $\{8, \dots, 10\}$ (3 items). $\binom{3}{3} = 1$.
+Sum for $p_2=5$: $4 + 1 = 5$.
+
+Total for $p_1 = 1$: $70 + 35 + 15 + 5 = 125$.
+
+**Case 2: $p_1 = 2$**
+Remaining to choose: $p_2, p_3, p_4, p_5, p_6$ from $\{3, \dots, 10\}$.
+Constraints:
+$p_2 \le 5$
+$p_3 \le 8$
+$p_4 \le 10$
+$p_5 \le 10$
+$p_6 \le 10$
+And $2 < p_2 < p_3 < p_4 < p_5 < p_6$.
+
+Subcase 2.1: $p_2 = 3$
+Need $p_3, p_4, p_5, p_6$ from $\{4, \dots, 10\}$ with $p_3 \le 8$.
+Same as Subcase 1.2.1 to 1.2.4 but starting from 4.
+$p_3=4 \implies \binom{6}{3} = 20$.
+$p_3=5 \implies \binom{5}{3} = 10$.
+$p_3=6 \implies \binom{4}{3} = 4$.
+$p_3=7 \implies \binom{3}{3} = 1$.
+Sum: 35.
+
+Subcase 2.2: $p_2 = 4$
+Need $p_3, p_4, p_5, p_6$ from $\{5, \dots, 10\}$ with $p_3 \le 8$.
+Same as Subcase 1.3.1 to 1.3.3.
+$p_3=5 \implies \binom{5}{3} = 10$.
+$p_3=6 \implies \binom{4}{3} = 4$.
+$p_3=7 \implies \binom{3}{3} = 1$.
+Sum: 15.
+
+Subcase 2.3: $p_2 = 5$
+Need $p_3, p_4, p_5, p_6$ from $\{6, \dots, 10\}$ with $p_3 \le 8$.
+Same as Subcase 1.4.1 to 1.4.2.
+$p_3=6 \implies \binom{4}{3} = 4$.
+$p_3=7 \implies \binom{3}{3} = 1$.
+Sum: 5.
+
+Total for $p_1 = 2$: $35 + 15 + 5 = 55$.
+
+**Total Count:**
+Total = (Count for $p_1=1$) + (Count for $p_1=2$)
+Total = $125 + 55 = 180$.
+
+Let's double check the logic.
+The condition derived was $p_j \le 3j - 1$.
+$j=1: p_1 \le 2$.
+$j=2: p_2 \le 5$.
+$j=3: p_3 \le 8$.
+$j=4: p_4 \le 11 \to 10$.
+$j=5: p_5 \le 14 \to 10$.
+$j=6: p_6 \le 17 \to 10$.
+
+Is there any other constraint?
+The condition $u_k \ge \lceil k/3 \rceil$ ensures $P_k \ge 0$.
+Let's re-verify with a small example.
+Suppose sequence is $+2, -1, -1, +2, +2, +2, +2, -1, -1, +2$.
+Positions:
+1: +2 (2)
+2: -1 (1)
+3: -1 (0) -> OK
+4: +2 (2)
+5: +2 (4)
+6: +2 (6)
+7: +2 (8)
+8: -1 (7)
+9: -1 (6)
+10: +2 (8)
+All non-negative.
+Here $p_1=1, p_2=4, p_3=5, p_4=6, p_5=7, p_6=10$.
+Check constraints:
+$p_1 \le 2$ (1<=2) OK.
+$p_2 \le 5$ (4<=5) OK.
+$p_3 \le 8$ (5<=8) OK.
+$p_4 \le 10$ (6<=10) OK.
+$p_5 \le 10$ (7<=10) OK.
+$p_6 \le 10$ (10<=10) OK.
+
+What if we violate $p_3 \le 8$? Say $p_3 = 9$.
+Sequence: $+2, +2, -1, -1, -1, +2, +2, +2, +2, +2$.
+Positions:
+1: 2
+2: 4
+3: 3
+4: 2
+5: 1
+6: 3
+7: 5
+8: 7
+9: 9
+10: 11? No, total +2 is 6.
+Let's construct properly. $p_1=1, p_2=2, p_3=9$.
+Moves: $+2, +2, -1, -1, -1, -1, -1, +2, +2, +2$.
+Wait, $p_3=9$ means first 3 +2s are at 1, 2, 9
+
+===== subsets  (exp 144, given 144, OK) =====
+To solve the problem of finding the number of subsets of the set $S = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}$ that contain no two consecutive integers, we can use a combinatorial approach involving a bijection (one-to-one correspondence).
+
+### Step 1: Define the Problem Parameters
+Let $n$ be the number of elements in the set $S$. Here, $n = 10$.
+We are looking for the number of subsets of $S$ such that if an integer $k$ is in the subset, then $k+1$ is not in the subset.
+Let the size of such a subset be $k$. We need to choose $k$ distinct integers from $\{1, 2, \dots, n\}$ such that no two are consecutive.
+
+### Step 2: Establish a Bijection
+Let the chosen integers in increasing order be $x_1, x_2, \dots, x_k$.
+The condition "no two consecutive integers" means:
+$x_{i+1} - x_i \ge 2$ for all $1 \le i \le k-1$.
+Also, the bounds are $1 \le x_1$ and $x_k \le n$.
+
+We can transform these variables into a new set of variables $y_1, y_2, \dots, y_k$ that represent the positions without the gap constraint.
+Define:
+$y_1 = x_1$
+$y_2 = x_2 - 1$
+$y_3 = x_3 - 2$
+...
+$y_i = x_i - (i-1)$
+...
+$y_k = x_k - (k-1)$
+
+Let's check the properties of $y_i$:
+1.  **Strictly Increasing**:
+    Since $x_{i+1} \ge x_i + 2$, we have:
+    $y_{i+1} = x_{i+1} - i \ge (x_i + 2) - i = (x_i - (i-1)) + 1 = y_i + 1$.
+    So, $y_{i+1} > y_i$. The $y$'s are distinct integers.
+
+2.  **Bounds**:
+    Lower bound: Since $x_1 \ge 1$, $y_1 \ge 1$.
+    Upper bound: Since $x_k \le n$, $y_k = x_k - (k-1) \le n - k + 1$.
+    Also, since $y_1 < y_2 < \dots < y_k$, the smallest possible value for $y_k$ is $k$.
+    Thus, $1 \le y_1 < y_2 < \dots < y_k \le n - k + 1$.
+
+This transformation shows a one-to-one correspondence between:
+- Choosing $k$ non-consecutive integers from $\{1, \dots, n\}$.
+- Choosing $k$ distinct integers from $\{1, \dots, n - k + 1\}$.
+
+### Step 3: Calculate the Number of Ways for a Fixed Size $k$
+The number of ways to choose $k$ distinct integers from a set of size $m$ is given by the binomial coefficient $\binom{m}{k}$.
+Here, $m = n - k + 1$.
+So, the number of subsets of size $k$ is $\binom{n - k + 1}{k}$.
+
+### Step 4: Sum Over All Possible Sizes $k$
+The size $k$ can range from $0$ (the empty set) up to the maximum possible size where no two numbers are consecutive.
+For $n=10$, the maximum size occurs when we pick every other number (e.g., 1, 3, 5, 7, 9), so $k_{max} = \lceil 10/2 \rceil = 5$.
+Generally, $k$ ranges from $0$ to $\lfloor \frac{n+1}{2} \rfloor$.
+
+The total number of such subsets is:
+$$ \sum_{k=0}^{\lfloor \frac{n+1}{2} \rfloor} \binom{n - k + 1}{k} $$
+
+Substituting $n = 10$:
+$$ \text{Total} = \sum_{k=0}^{5} \binom{10 - k + 1}{k} = \sum_{k=0}^{5} \binom{11 - k}{k} $$
+
+Let's calculate each term:
+-   For $k=0$: $\binom{11}{0} = 1$ (The empty set)
+-   For $k=1$: $\binom{10}{1} = 10$
+-   For $k=2$: $\binom{9}{2} = \frac{9 \times 8}{2} = 36$
+-   For $k=3$: $\binom{8}{3} = \frac{8 \times 7 \times 6}{3 \times 2 \times 1} = 56$
+-   For $k=4$: $\binom{7}{4} = \binom{7}{3} = \frac{7 \times 6 \times 5}{3 \times 2 \times 1} = 35$
+-   For $k=5$: $\binom{6}{5} = 6$
+
+### Step 5: Sum the Results
+$$ \text{Total} = 1 + 10 + 36 + 56 + 35 + 6 $$
+$$ 1 + 10 = 11 $$
+$$ 11 + 36 = 47 $$
+$$ 47 + 56 = 103 $$
+$$ 103 + 35 = 138 $$
+$$ 138 + 6 = 144 $$
+
+### Alternative Method: Fibonacci Sequence
+The number of subsets of $\{1, 2, \dots, n\}$ with no consecutive integers is given by the Fibonacci number $F_{n+2}$, where $F_1 = 1, F_2 = 1, F_3 = 2, \dots$.
+Let's verify the sequence:
+-   $n=1$: Subsets $\emptyset, \{1\}$. Count = 2. ($F_3 = 2$)
+-   $n=2$: Subsets $\emptyset, \{1\}, \{2\}$. Count = 3. ($F_4 = 3$)
+-   $n=3$: Subsets $\emptyset, \{1\}, \{2\}, \{3\}, \{1,3\}$. Count = 5. ($F_5 = 5$)
+
+The recurrence relation is $a_n = a_{n-1} + a_{n-2}$.
+-   $a_1 = 2$
+-   $a_2 = 3$
+-   $a_3 = 3 + 2 = 5$
+-   $a_4 = 5 + 3 = 8$
+-   $a_5 = 8 + 5 = 13$
+-   $a_6 = 13 + 8 = 21$
+-   $a_7 = 21 + 13 = 34$
+-   $a_8 = 34 + 21 = 55$
+-   $a_9 = 55 + 34 = 89$
+-   $a_{10} = 89 + 55 = 144$
+
+Both methods yield the same result.
+
+ANSWER: 144
+
+===== change50  (exp 49, given 49, OK) =====
+To solve the problem of finding the number of ways to make 50 cents using pennies (1¢), nickels (5¢), dimes (10¢), and quarters (25¢), we can break it down by considering the number of quarters used, then dimes, then nickels. The remaining amount will always be filled by pennies.
+
+Let $q$ be the number of quarters, $d$ be the number of dimes, $n$ be the number of nickels, and $p$ be the number of pennies.
+The equation is:
+$25q + 10d + 5n + 1p = 50$
+
+Since we want to find the number of non-negative integer solutions, we can iterate through the possible values for the largest denominations first.
+
+**Step 1: Determine the possible values for Quarters ($q$)**
+The maximum value of a quarter is 25.
+Possible values for $q$: 0, 1, 2. (Since $3 \times 25 = 75 > 50$).
+
+**Case 1: $q = 2$ (2 Quarters)**
+Value covered: $2 \times 25 = 50$.
+Remaining amount needed: $50 - 50 = 0$.
+There is only 1 way to make 0 cents (0 nickels, 0 dimes, 0 pennies).
+- Solution: (2Q, 0D, 0N, 0P)
+Count = 1
+
+**Case 2: $q = 1$ (1 Quarter)**
+Value covered: $1 \times 25 = 25$.
+Remaining amount needed: $50 - 25 = 25$.
+Now we need to make 25 cents using dimes (10¢), nickels (5¢), and pennies (1¢).
+Let's iterate through the number of dimes ($d$).
+Possible values for $d$: 0, 1, 2. (Since $3 \times 10 = 30 > 25$).
+
+- Subcase 2a: $d = 2$
+  Value covered: $2 \times 10 = 20$.
+  Remaining: $25 - 20 = 5$.
+  We need to make 5 cents with nickels and pennies.
+  Possible nickels ($n$): 0, 1.
+  - If $n=1$, $p=0$.
+  - If $n=0$, $p=5$.
+  Count = 2 ways.
+
+- Subcase 2b: $d = 1$
+  Value covered: $1 \times 10 = 10$.
+  Remaining: $25 - 10 = 15$.
+  We need to make 15 cents with nickels and pennies.
+  Possible nickels ($n$): 0, 1, 2, 3. (Since $4 \times 5 = 20 > 15$).
+  For each $n$, $p$ is determined ($p = 15 - 5n$).
+  Count = 4 ways.
+
+- Subcase 2c: $d = 0$
+  Value covered: $0 \times 10 = 0$.
+  Remaining: $25 - 0 = 25$.
+  We need to make 25 cents with nickels and pennies.
+  Possible nickels ($n$): 0, 1, 2, 3, 4, 5. (Since $6 \times 5 = 30 > 25$).
+  Count = 6 ways.
+
+Total for Case 2 ($q=1$) = $2 + 4 + 6 = 12$ ways.
+
+**Case 3: $q = 0$ (0 Quarters)**
+Value covered: $0$.
+Remaining amount needed: $50$.
+Now we need to make 50 cents using dimes, nickels, and pennies.
+Iterate through the number of dimes ($d$).
+Possible values for $d$: 0, 1, 2, 3, 4, 5. (Since $6 \times 10 = 60 > 50$).
+
+For a fixed number of dimes $d$, the remaining amount is $R = 50 - 10d$.
+We need to make $R$ cents using nickels and pennies.
+The number of ways to make $R$ cents with nickels and pennies is simply $R/5 + 1$ (since $n$ can range from $0$ to $R/5$, and $p$ is fixed for each $n$).
+Formula: Ways = $\frac{50 - 10d}{5} + 1 = (10 - 2d) + 1 = 11 - 2d$.
+
+Let's calculate for each $d$:
+- If $d = 5$: Remaining = 0. Ways = $11 - 2(5) = 1$.
+- If $d = 4$: Remaining = 10. Ways = $11 - 2(4) = 3$.
+- If $d = 3$: Remaining = 20. Ways = $11 - 2(3) = 5$.
+- If $d = 2$: Remaining = 30. Ways = $11 - 2(2) = 7$.
+- If $d = 1$: Remaining = 40. Ways = $11 - 2(1) = 9$.
+- If $d = 0$: Remaining = 50. Ways = $11 - 2(0) = 11$.
+
+Total for Case 3 ($q=0$) = $1 + 3 + 5 + 7 + 9 + 11$.
+Sum = $1 + 3 = 4$; $4 + 5 = 9$; $9 + 7 = 16$; $16 + 9 = 25$; $25 + 11 = 36$.
+Count = 36 ways.
+
+**Step 2: Sum the counts from all cases**
+Total ways = (Case 1) + (Case 2) + (Case 3)
+Total ways = $1 + 12 + 36$
+Total ways = $49$
+
+Let's double check the logic.
+The number of ways to make change for $N$ cents using coins of denominations $c_1, c_2, \dots$ is a standard partition problem.
+For 50 cents with {1, 5, 10, 25}:
+- 2 Quarters: 1 way.
+- 1 Quarter: Need 25 from {1, 5, 10}.
+  - 2 Dimes: Need 5 from {1, 5} -> 2 ways (0N, 1N).
+  - 1 Dime: Need 15 from {1, 5} -> 4 ways (0N, 1N, 2N, 3N).
+  - 0 Dimes: Need 25 from {1, 5} -> 6 ways (0N...5N).
+  Sum = 12. Correct.
+- 0 Quarters: Need 50 from {1, 5, 10}.
+  - 5 Dimes: Need 0 -> 1 way.
+  - 4 Dimes: Need 10 -> 3 ways.
+  - 3 Dimes: Need 20 -> 5 ways.
+  - 2 Dimes: Need 30 -> 7 ways.
+  - 1 Dime: Need 40 -> 9 ways.
+  - 0 Dimes: Need 50 -> 11 ways.
+  Sum = 1+3+5+7+9+11 = 36. Correct.
+
+Total = 1 + 12 + 36 = 49.
+
+ANSWER: 49
+
+===== mod3  (exp 1, given 1, OK) =====
+To find the remainder when $3^{100}$ is divided by $100$, we need to compute $3^{100} \pmod{100}$.
+
+Since $100 = 4 \times 25$ and $\gcd(4, 25) = 1$, we can compute the remainder modulo 4 and modulo 25 separately, and then combine the results using the Chinese Remainder Theorem.
+
+**Step 1: Compute $3^{100} \pmod 4$**
+We know that $3 \equiv -1 \pmod 4$.
+Therefore:
+$$3^{100} \equiv (-1)^{100} \pmod 4$$
+Since 100 is an even number:
+$$(-1)^{100} = 1$$
+So,
+$$3^{100} \equiv 1 \pmod 4$$
+
+**Step 2: Compute $3^{100} \pmod{25}$**
+We can use Euler's Totient Theorem. Euler's theorem states that if $\gcd(a, n) = 1$, then $a^{\phi(n)} \equiv 1 \pmod n$.
+Here, $a = 3$ and $n = 25$. Since $\gcd(3, 25) = 1$, the theorem applies.
+First, calculate $\phi(25)$:
+$$\phi(25) = 25 \left(1 - \frac{1}{5}\right) = 25 \times \frac{4}{5} = 20$$
+So, $3^{20} \equiv 1 \pmod{25}$.
+
+Now, express the exponent 100 in terms of 20:
+$$100 = 20 \times 5$$
+Therefore:
+$$3^{100} = (3^{20})^5 \equiv 1^5 \equiv 1 \pmod{25}$$
+
+**Step 3: Combine the results**
+We have the following system of congruences:
+1. $x \equiv 1 \pmod 4$
+2. $x \equiv 1 \pmod{25}$
+
+Since $x \equiv 1 \pmod{25}$, we can write $x = 25k + 1$ for some integer $k$.
+Substitute this into the first congruence:
+$$25k + 1 \equiv 1 \pmod 4$$
+$$25k \equiv 0 \pmod 4$$
+Since $25 \equiv 1 \pmod 4$, this simplifies to:
+$$1k \equiv 0 \pmod 4$$
+$$k \equiv 0 \pmod 4$$
+So, $k$ must be a multiple of 4. Let $k = 4m$.
+Then:
+$$x = 25(4m) + 1 = 100m + 1$$
+Thus, $x \equiv 1 \pmod{100}$.
+
+Alternatively, since $x \equiv 1 \pmod 4$ and $x \equiv 1 \pmod{25}$, and $\text{lcm}(4, 25) = 100$, it follows directly that $x \equiv 1 \pmod{100}$.
+
+**Conclusion**
+The remainder when $3^{100}$ is divided by $100$ is 1.
+
+ANSWER: 1
+
+===== sqnotcube  (exp 96, given 96, OK) =====
+To solve the problem of finding how many integers from 1 to 10,000 inclusive are perfect squares but not perfect cubes, we will proceed step by step.
+
+**Step 1: Count the number of perfect squares in the range [1, 10000].**
+An integer $n$ is a perfect square if $n = k^2$ for some integer $k$.
+We need to find the number of integers $k$ such that $1 \le k^2 \le 10000$.
+Taking the square root of the inequality:
+$\sqrt{1} \le k \le \sqrt{10000}$
+$1 \le k \le 100$
+Since $k$ must be an integer, the possible values for $k$ are $1, 2, 3, \dots, 100$.
+The total count of perfect squares is 100.
+
+**Step 2: Count the number of perfect cubes in the range [1, 10000].**
+An integer $n$ is a perfect cube if $n = m^3$ for some integer $m$.
+We need to find the number of integers $m$ such that $1 \le m^3 \le 10000$.
+Taking the cube root of the inequality:
+$\sqrt[3]{1} \le m \le \sqrt[3]{10000}$
+$1 \le m \le 21.54\dots$
+Since $m$ must be an integer, the possible values for $m$ are $1, 2, 3, \dots, 21$.
+(Note: $21^3 = 9261$ and $22^3 = 10648$, so 21 is the largest integer).
+The total count of perfect cubes is 21.
+
+**Step 3: Count the number of integers that are both perfect squares and perfect cubes.**
+An integer is both a perfect square and a perfect cube if it is a perfect sixth power.
+Proof: If $n = k^2$ and $n = m^3$, then the prime factorization of $n$ must have exponents divisible by both 2 and 3. The least common multiple of 2 and 3 is 6. Thus, $n = j^6$.
+We need to find the number of integers $j$ such that $1 \le j^6 \le 10000$.
+Taking the sixth root:
+$\sqrt[6]{1} \le j \le \sqrt[6]{10000}$
+$1 \le j \le (10000)^{1/6}$
+We know that $10000 = 10^4$.
+So, $j \le (10^4)^{1/6} = 10^{4/6} = 10^{2/3} = \sqrt[3]{100}$.
+Since $4^3 = 64$ and $5^3 = 125$, $\sqrt[3]{100}$ is approximately 4.64.
+Thus, the possible integer values for $j$ are $1, 2, 3, 4$.
+Let's verify:
+$1^6 = 1$
+$2^6 = 64$
+$3^6 = 729$
+$4^6 = 4096$
+$5^6 = 15625$ (which is greater than 10000)
+So, there are 4 integers that are both perfect squares and perfect cubes.
+
+**Step 4: Calculate the final answer.**
+We want the number of integers that are perfect squares but **not** perfect cubes.
+Using the Principle of Inclusion-Exclusion logic (or simple subtraction since the set of "both" is a subset of "squares"):
+Count = (Total Perfect Squares) - (Perfect Squares that are also Perfect Cubes)
+Count = (Total Perfect Squares) - (Total Perfect Sixth Powers)
+Count = $100 - 4$
+Count = $96$
+
+Let's double check the logic.
+Set $S = \{n \in [1, 10000] : n \text{ is a square}\}$. $|S| = 100$.
+Set $C = \{n \in [1, 10000] : n \text{ is a cube}\}$. $|C| = 21$.
+We want $|S \setminus C| = |S| - |S \cap C|$.
+$S \cap C$ is the set of numbers that are both squares and cubes, which are sixth powers.
+$|S \cap C| = 4$.
+Result = $100 - 4 = 96$.
+
+ANSWER: 96
+
+===== triples  (exp 12, given 12, OK) =====
+To solve the problem of finding the number of triples of integers $(a, b, c)$ such that $1 \le a < b < c$ and $a + b + c = 15$, we can proceed with the following steps:
+
+### Step 1: Analyze the constraints
+We are looking for integer solutions to:
+1. $a + b + c = 15$
+2. $1 \le a < b < c$
+
+Since $a, b, c$ are distinct positive integers, the smallest possible values for them would be $1, 2, 3$.
+Let's check the sum of the smallest possible triple: $1 + 2 + 3 = 6$. Since $6 < 15$, solutions exist.
+
+### Step 2: Transform the variables to remove inequalities
+The condition $a < b < c$ suggests we can define new variables to represent the gaps between the numbers.
+Let:
+$b = a + x$
+$c = b + y = a + x + y$
+where $x$ and $y$ are positive integers ($x \ge 1, y \ge 1$).
+
+Substitute these into the sum equation:
+$a + (a + x) + (a + x + y) = 15$
+$3a + 2x + y = 15$
+
+Here, $a \ge 1$, $x \ge 1$, and $y \ge 1$.
+We need to find the number of integer solutions $(a, x, y)$ to this equation.
+
+### Step 3: Iterate through possible values of $a$
+Since $a \ge 1$ and $2x + y \ge 2(1) + 1 = 3$, the maximum value for $3a$ is $15 - 3 = 12$.
+So, $3a \le 12 \implies a \le 4$.
+Possible values for $a$ are $1, 2, 3, 4$.
+
+Let's analyze each case:
+
+**Case 1: $a = 1$**
+Equation becomes: $3(1) + 2x + y = 15 \implies 2x + y = 12$.
+We need to find the number of pairs $(x, y)$ such that $x \ge 1, y \ge 1$.
+From $y = 12 - 2x$, since $y \ge 1$:
+$12 - 2x \ge 1 \implies 2x \le 11 \implies x \le 5.5$.
+Since $x \ge 1$, possible values for $x$ are $1, 2, 3, 4, 5$.
+For each $x$, $y$ is uniquely determined.
+Number of solutions: **5**.
+(The triples $(a,b,c)$ would be:
+$x=1 \implies b=2, c=11 \implies (1,2,11)$
+$x=2 \implies b=3, c=10 \implies (1,3,10)$
+$x=3 \implies b=4, c=9 \implies (1,4,9)$
+$x=4 \implies b=5, c=8 \implies (1,5,8)$
+$x=5 \implies b=6, c=7 \implies (1,6,7)$)
+
+**Case 2: $a = 2$**
+Equation becomes: $3(2) + 2x + y = 15 \implies 6 + 2x + y = 15 \implies 2x + y = 9$.
+Constraints: $x \ge 1, y \ge 1$.
+From $y = 9 - 2x$, since $y \ge 1$:
+$9 - 2x \ge 1 \implies 2x \le 8 \implies x \le 4$.
+Possible values for $x$ are $1, 2, 3, 4$.
+Number of solutions: **4**.
+(The triples $(a,b,c)$ would be:
+$x=1 \implies b=3, c=10 \implies (2,3,10)$
+$x=2 \implies b=4, c=9 \implies (2,4,9)$
+$x=3 \implies b=5, c=8 \implies (2,5,8)$
+$x=4 \implies b=6, c=7 \implies (2,6,7)$)
+
+**Case 3: $a = 3$**
+Equation becomes: $3(3) + 2x + y = 15 \implies 9 + 2x + y = 15 \implies 2x + y = 6$.
+Constraints: $x \ge 1, y \ge 1$.
+From $y = 6 - 2x$, since $y \ge 1$:
+$6 - 2x \ge 1 \implies 2x \le 5 \implies x \le 2.5$.
+Possible values for $x$ are $1, 2$.
+Number of solutions: **2**.
+(The triples $(a,b,c)$ would be:
+$x=1 \implies b=4, c=9 \implies (3,4,8)$
+$x=2 \implies b=5, c=7 \implies (3,5,7)$)
+
+**Case 4: $a = 4$**
+Equation becomes: $3(4) + 2x + y = 15 \implies 12 + 2x + y = 15 \implies 2x + y = 3$.
+Constraints: $x \ge 1, y \ge 1$.
+From $y = 3 - 2x$, since $y \ge 1$:
+$3 - 2x \ge 1 \implies 2x \le 2 \implies x \le 1$.
+Possible value for $x$ is $1$.
+If $x=1$, then $y = 3 - 2(1) = 1$.
+Number of solutions: **1**.
+(The triple $(a,b,c)$ would be:
+$x=1 \implies b=5, c=6 \implies (4,5,6)$)
+
+### Step 4: Sum the results
+Total number of triples = (Solutions for $a=1$) + (Solutions for $a=2$) + (Solutions for $a=3$) + (Solutions for $a=4$)
+Total = $5 + 4 + 2 + 1 = 12$.
+
+### Alternative Method: Stars and Bars with Inclusion-Exclusion
+Total positive integer solutions to $a+b+c=15$ is $\binom{15-1}{3-1} = \binom{14}{2} = \frac{14 \times 13}{2} = 91$.
+We need to subtract cases where the order is not strictly increasing ($a < b < c$).
+The set of all solutions includes permutations of distinct numbers and cases with equal numbers.
+Let $S$ be the set of all positive integer solutions. $|S| = 91$.
+Let $N$ be the number of solutions with distinct elements.
+Let $E$ be the number of solutions with at least two equal elements.
+Any solution with distinct elements $\{a, b, c\}$ has $3! = 6$ permutations.
+Any solution with exactly two equal elements (e.g., $a=b \neq c$) has $3$ permutations.
+Any solution with three equal elements ($a=b=c$) has $1$ permutation.
+
+First, check for $a=b=c$:
+$3a = 15 \implies a=5$. Solution: $(5,5,5)$. Count = 1.
+Next, check for exactly two equal:
+$a=b \neq c \implies 2a+c=15$. Since $c \neq a$, $c = 15-2a \neq a \implies 3a \neq 15 \implies a \neq 5$.
+Possible $a$:
+If $a=1, c=13$ (ok)
+If $a=2, c=11$ (ok)
+If $a=3, c=9$ (ok)
+If $a=4, c=7$ (ok)
+If $a=5, c=5$ (excluded, already counted)
+If $a=6, c=3$ (ok, but $a=b=6, c=3$)
+If $a=7, c=-1$ (no)
+So pairs $(a,a,c)$ are $(1,1,13), (2,2,11), (3,3,9), (4,4,7), (6,6,3), (7,7,-1 \text{ no})$.
+Wait, $c$ must be $\ge 1$.
+$2a < 15 \implies a \le 7$.
+$a=1, c=13$
+$a=2, c=11$
+$a=3, c=9$
+$a=4, c=7$
+$a=5, c=5$ (3 equal)
+$a=6, c=3$
+$a=7, c=1$
+Total solutions with at least two equal = (3 equal) + (exactly 2 equal).
+Exactly 2 equal: $a=1,2,3,4,6,7$. That's 6 solutions.
+3 equal: $a=5$. That's 1 solution.
+Total non-distinct solutions = $6 + 1 = 7$.
+These 7 solutions account for all permutations where equality holds.
+Number of permutations for these 7 solutions:
+- 1 solution with 3 equal: 1 permutation.
+- 6 solutions with 2 equal: $6 \times 3 = 18$ permutations.
+Total permutations of non-distinct solutions = $1 + 18 = 19$.
+
+Total permutations of distinct solutions = Total permutations - Permutations of non-distinct
+Total permutations of distinct solutions = $91 - 19 = 72$.
+Since each distinct set $\{a,b,c\}$ corresponds to $3! = 6$ permutations, the number of sets is:
+$72 / 6 = 12$.
+
+Both methods yield 12.
+
+ANSWER: 12
+
+===== flush  (exp 5148, given 5148, OK) =====
+To solve the problem of finding the number of 5-card hands consisting of 5 cards all of the same suit from a standard 52-card deck, we will proceed step by step.
+
+**Step 1: Understand the structure of the deck.**
+A standard deck has 52 cards.
+There are 4 suits: Hearts, Diamonds, Clubs, and Spades.
+Each suit contains 13 ranks (2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King, Ace).
+
+**Step 2: Define the condition for a "flush" (5 cards of the same suit).**
+We need to select 5 cards such that they all belong to the same suit.
+Since there are 4 distinct suits, we can choose the suit in 4 ways.
+
+**Step 3: Calculate the number of ways to choose 5 cards from a single suit.**
+Once a specific suit is chosen (e.g., Hearts), we need to select 5 cards out of the 13 available cards in that suit. The order in which the cards are drawn does not matter for a "hand," so we use combinations.
+The formula for combinations is $C(n, k) = \binom{n}{k} = \frac{n!}{k!(n-k)!}$.
+Here, $n = 13$ (total cards in the suit) and $k = 5$ (cards to choose).
+
+$$ \binom{13}{5} = \frac{13!}{5!(13-5)!} = \frac{13!}{5!8!} $$
+
+Let's calculate the value:
+$$ \binom{13}{5} = \frac{13 \times 12 \times 11 \times 10 \times 9}{5 \times 4 \times 3 \times 2 \times 1} $$
+
+Simplify the fraction:
+- $5 \times 2 = 10$, which cancels with the $10$ in the numerator.
+- $4 \times 3 = 12$, which cancels with the $12$ in the numerator.
+- We are left with $13 \times 11 \times 9$.
+
+Calculation:
+$13 \times 11 = 143$
+$143 \times 9 = 1287$
+
+So, there are 1,287 ways to choose 5 cards from a single specific suit.
+
+**Step 4: Calculate the total number of hands for any suit.**
+Since there are 4 suits, and the choices for each suit are mutually exclusive (a hand cannot be all Hearts and all Spades simultaneously), we multiply the number of ways for one suit by the number of suits.
+
+Total hands = (Number of suits) $\times$ (Ways to choose 5 cards from one suit)
+Total hands = $4 \times 1287$
+
+Calculation:
+$4 \times 1200 = 4800$
+$4 \times 80 = 320$
+$4 \times 7 = 28$
+$4800 + 320 + 28 = 5148$
+
+Alternatively:
+$1287 \times 2 = 2574$
+$2574 \times 2 = 5148$
+
+**Conclusion:**
+There are 5,148 possible 5-card hands where all cards are of the same suit.
+
+ANSWER: 5148
