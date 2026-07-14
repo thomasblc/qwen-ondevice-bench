@@ -1,0 +1,15 @@
+{
+  "name": "qwen-ondevice-bench",
+  "version": "1.0.0",
+  "description": "A small, honest, reproducible benchmark of three Qwen models run fully on-device.",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@qvac/sdk": "^0.14.0"
+  },
+  "scripts": {
+    "probe": "node probe.mjs",
+    "probe2": "node probe2.mjs",
+    "probe3": "node probe3.mjs"
+  }
+}

@@ -1,0 +1,364 @@
+{
+  "startedAt": "2026-07-01T09:55:20.847Z",
+  "machine": "Apple M5 Max, 36 GB",
+  "thinking": false,
+  "greedy": true,
+  "seed": 1,
+  "predict": 5000,
+  "models": [
+    "qwen3.5-4b",
+    "qwen3.5-9b",
+    "qwen3.6-35b-a3b"
+  ],
+  "pool": [
+    {
+      "id": "pairs",
+      "exp": 170
+    },
+    {
+      "id": "euler",
+      "exp": 14
+    },
+    {
+      "id": "fib",
+      "exp": 75
+    },
+    {
+      "id": "walk",
+      "exp": 120
+    },
+    {
+      "id": "subsets",
+      "exp": 144
+    },
+    {
+      "id": "change50",
+      "exp": 49
+    },
+    {
+      "id": "mod3",
+      "exp": 1
+    },
+    {
+      "id": "sqnotcube",
+      "exp": 96
+    },
+    {
+      "id": "triples",
+      "exp": 12
+    },
+    {
+      "id": "flush",
+      "exp": 5148
+    }
+  ],
+  "byModel": {
+    "qwen3.5-4b": [
+      {
+        "id": "pairs",
+        "exp": 170,
+        "given": null,
+        "correct": false,
+        "ms": 62340,
+        "genTok": 5000,
+        "decodeTokS": 81.6,
+        "ttftMs": 101.9
+      },
+      {
+        "id": "euler",
+        "exp": 14,
+        "given": null,
+        "correct": false,
+        "ms": 62202,
+        "genTok": 5000,
+        "decodeTokS": 81.9,
+        "ttftMs": 120.6
+      },
+      {
+        "id": "fib",
+        "exp": 75,
+        "given": 315,
+        "correct": false,
+        "ms": 50728,
+        "genTok": 3933,
+        "decodeTokS": 79.2,
+        "ttftMs": 144.2
+      },
+      {
+        "id": "walk",
+        "exp": 120,
+        "given": null,
+        "correct": false,
+        "ms": 66171,
+        "genTok": 5000,
+        "decodeTokS": 77.1,
+        "ttftMs": 134.8
+      },
+      {
+        "id": "subsets",
+        "exp": 144,
+        "given": 144,
+        "correct": true,
+        "ms": 19230,
+        "genTok": 1460,
+        "decodeTokS": 78.1,
+        "ttftMs": 129.6
+      },
+      {
+        "id": "change50",
+        "exp": 49,
+        "given": 49,
+        "correct": true,
+        "ms": 16425,
+        "genTok": 1257,
+        "decodeTokS": 78.8,
+        "ttftMs": 107.8
+      },
+      {
+        "id": "mod3",
+        "exp": 1,
+        "given": 1,
+        "correct": true,
+        "ms": 8962,
+        "genTok": 689,
+        "decodeTokS": 79.3,
+        "ttftMs": 104.7
+      },
+      {
+        "id": "sqnotcube",
+        "exp": 96,
+        "given": 96,
+        "correct": true,
+        "ms": 11170,
+        "genTok": 855,
+        "decodeTokS": 79.3,
+        "ttftMs": 115.1
+      },
+      {
+        "id": "triples",
+        "exp": 12,
+        "given": 12,
+        "correct": true,
+        "ms": 20934,
+        "genTok": 1616,
+        "decodeTokS": 79,
+        "ttftMs": 104.7
+      },
+      {
+        "id": "flush",
+        "exp": 5148,
+        "given": 5148,
+        "correct": true,
+        "ms": 9767,
+        "genTok": 755,
+        "decodeTokS": 79.6,
+        "ttftMs": 106.9
+      }
+    ],
+    "qwen3.5-9b": [
+      {
+        "id": "pairs",
+        "exp": 170,
+        "given": null,
+        "correct": false,
+        "ms": 99890,
+        "genTok": 5000,
+        "decodeTokS": 50.6,
+        "ttftMs": 160.5
+      },
+      {
+        "id": "euler",
+        "exp": 14,
+        "given": null,
+        "correct": false,
+        "ms": 101683,
+        "genTok": 5000,
+        "decodeTokS": 49.7,
+        "ttftMs": 233.1
+      },
+      {
+        "id": "fib",
+        "exp": 75,
+        "given": 995,
+        "correct": false,
+        "ms": 59337,
+        "genTok": 2927,
+        "decodeTokS": 50.1,
+        "ttftMs": 311
+      },
+      {
+        "id": "walk",
+        "exp": 120,
+        "given": null,
+        "correct": false,
+        "ms": 101470,
+        "genTok": 5000,
+        "decodeTokS": 49.9,
+        "ttftMs": 290.7
+      },
+      {
+        "id": "subsets",
+        "exp": 144,
+        "given": 144,
+        "correct": true,
+        "ms": 35644,
+        "genTok": 1767,
+        "decodeTokS": 50.5,
+        "ttftMs": 291
+      },
+      {
+        "id": "change50",
+        "exp": 49,
+        "given": 49,
+        "correct": true,
+        "ms": 36952,
+        "genTok": 1833,
+        "decodeTokS": 50.5,
+        "ttftMs": 213.9
+      },
+      {
+        "id": "mod3",
+        "exp": 1,
+        "given": 1,
+        "correct": true,
+        "ms": 16325,
+        "genTok": 800,
+        "decodeTokS": 50.3,
+        "ttftMs": 196
+      },
+      {
+        "id": "sqnotcube",
+        "exp": 96,
+        "given": 96,
+        "correct": true,
+        "ms": 22372,
+        "genTok": 1104,
+        "decodeTokS": 50.5,
+        "ttftMs": 221.4
+      },
+      {
+        "id": "triples",
+        "exp": 12,
+        "given": 12,
+        "correct": true,
+        "ms": 48151,
+        "genTok": 2395,
+        "decodeTokS": 50.5,
+        "ttftMs": 202.5
+      },
+      {
+        "id": "flush",
+        "exp": 5148,
+        "given": 5148,
+        "correct": true,
+        "ms": 16100,
+        "genTok": 798,
+        "decodeTokS": 50.9,
+        "ttftMs": 251.2
+      }
+    ],
+    "qwen3.6-35b-a3b": [
+      {
+        "id": "pairs",
+        "exp": 170,
+        "given": null,
+        "correct": false,
+        "ms": 76276,
+        "genTok": 5000,
+        "decodeTokS": 66.6,
+        "ttftMs": 185.8
+      },
+      {
+        "id": "euler",
+        "exp": 14,
+        "given": null,
+        "correct": false,
+        "ms": 77894,
+        "genTok": 5000,
+        "decodeTokS": 65.4,
+        "ttftMs": 182.8
+      },
+      {
+        "id": "fib",
+        "exp": 75,
+        "given": 75,
+        "correct": true,
+        "ms": 66414,
+        "genTok": 4275,
+        "decodeTokS": 65.5,
+        "ttftMs": 202.4
+      },
+      {
+        "id": "walk",
+        "exp": 120,
+        "given": null,
+        "correct": false,
+        "ms": 81216,
+        "genTok": 5000,
+        "decodeTokS": 62.7,
+        "ttftMs": 234.7
+      },
+      {
+        "id": "subsets",
+        "exp": 144,
+        "given": 144,
+        "correct": true,
+        "ms": 15812,
+        "genTok": 1011,
+        "decodeTokS": 65.9,
+        "ttftMs": 194.4
+      },
+      {
+        "id": "change50",
+        "exp": 49,
+        "given": 49,
+        "correct": true,
+        "ms": 22101,
+        "genTok": 1421,
+        "decodeTokS": 66.1,
+        "ttftMs": 197.4
+      },
+      {
+        "id": "mod3",
+        "exp": 1,
+        "given": 1,
+        "correct": true,
+        "ms": 18648,
+        "genTok": 1219,
+        "decodeTokS": 67.2,
+        "ttftMs": 172.8
+      },
+      {
+        "id": "sqnotcube",
+        "exp": 96,
+        "given": 96,
+        "correct": true,
+        "ms": 12867,
+        "genTok": 839,
+        "decodeTokS": 67.5,
+        "ttftMs": 173.2
+      },
+      {
+        "id": "triples",
+        "exp": 12,
+        "given": 12,
+        "correct": true,
+        "ms": 24013,
+        "genTok": 1585,
+        "decodeTokS": 67.4,
+        "ttftMs": 184.7
+      },
+      {
+        "id": "flush",
+        "exp": 5148,
+        "given": 5148,
+        "correct": true,
+        "ms": 10231,
+        "genTok": 667,
+        "decodeTokS": 67.7,
+        "ttftMs": 194.1
+      }
+    ]
+  },
+  "finishedAt": "2026-07-01T10:16:46.021Z"
+}

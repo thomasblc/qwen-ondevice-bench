@@ -1,0 +1,398 @@
+{
+  "startedAt": "2026-07-01T09:43:31.250Z",
+  "machine": "Apple M5 Max, 36 GB",
+  "thinking": false,
+  "greedy": true,
+  "seed": 1,
+  "predict": 4000,
+  "models": [
+    "qwen3.5-4b",
+    "qwen3.5-9b",
+    "qwen3.6-35b-a3b"
+  ],
+  "pool": [
+    {
+      "id": "A_balls",
+      "exp": 44
+    },
+    {
+      "id": "B_base12z",
+      "exp": 48
+    },
+    {
+      "id": "C_paths",
+      "exp": 126
+    },
+    {
+      "id": "D_committee",
+      "exp": 666
+    },
+    {
+      "id": "E_crt",
+      "exp": 59
+    },
+    {
+      "id": "F_distinct4",
+      "exp": 4536
+    },
+    {
+      "id": "G_div",
+      "exp": 401
+    },
+    {
+      "id": "H_domino",
+      "exp": 89
+    },
+    {
+      "id": "I_coeff",
+      "exp": 1452
+    },
+    {
+      "id": "J_div20fact",
+      "exp": 41040
+    },
+    {
+      "id": "K_digitsum",
+      "exp": 66
+    }
+  ],
+  "byModel": {
+    "qwen3.5-4b": [
+      {
+        "id": "A_balls",
+        "exp": 44,
+        "given": 44,
+        "correct": true,
+        "ms": 35035,
+        "genTok": 3259,
+        "decodeTokS": 94.7,
+        "ttftMs": 99.6
+      },
+      {
+        "id": "B_base12z",
+        "exp": 48,
+        "given": 48,
+        "correct": true,
+        "ms": 11171,
+        "genTok": 1039,
+        "decodeTokS": 95.4,
+        "ttftMs": 81.8
+      },
+      {
+        "id": "C_paths",
+        "exp": 126,
+        "given": 126,
+        "correct": true,
+        "ms": 8349,
+        "genTok": 773,
+        "decodeTokS": 95.8,
+        "ttftMs": 82.6
+      },
+      {
+        "id": "D_committee",
+        "exp": 666,
+        "given": 666,
+        "correct": true,
+        "ms": 10264,
+        "genTok": 959,
+        "decodeTokS": 95.8,
+        "ttftMs": 82
+      },
+      {
+        "id": "E_crt",
+        "exp": 59,
+        "given": 59,
+        "correct": true,
+        "ms": 10665,
+        "genTok": 995,
+        "decodeTokS": 95.6,
+        "ttftMs": 102.6
+      },
+      {
+        "id": "F_distinct4",
+        "exp": 4536,
+        "given": 4536,
+        "correct": true,
+        "ms": 9156,
+        "genTok": 840,
+        "decodeTokS": 94.1,
+        "ttftMs": 81.3
+      },
+      {
+        "id": "G_div",
+        "exp": 401,
+        "given": 401,
+        "correct": true,
+        "ms": 13583,
+        "genTok": 1208,
+        "decodeTokS": 90.7,
+        "ttftMs": 83.1
+      },
+      {
+        "id": "H_domino",
+        "exp": 89,
+        "given": 89,
+        "correct": true,
+        "ms": 10975,
+        "genTok": 962,
+        "decodeTokS": 90,
+        "ttftMs": 88.7
+      },
+      {
+        "id": "I_coeff",
+        "exp": 1452,
+        "given": 1452,
+        "correct": true,
+        "ms": 23163,
+        "genTok": 1978,
+        "decodeTokS": 87.3,
+        "ttftMs": 88.5
+      },
+      {
+        "id": "J_div20fact",
+        "exp": 41040,
+        "given": 41040,
+        "correct": true,
+        "ms": 20749,
+        "genTok": 1698,
+        "decodeTokS": 83.9,
+        "ttftMs": 91.5
+      },
+      {
+        "id": "K_digitsum",
+        "exp": 66,
+        "given": 66,
+        "correct": true,
+        "ms": 25179,
+        "genTok": 2037,
+        "decodeTokS": 82.7,
+        "ttftMs": 97.8
+      }
+    ],
+    "qwen3.5-9b": [
+      {
+        "id": "A_balls",
+        "exp": 44,
+        "given": 44,
+        "correct": true,
+        "ms": 38700,
+        "genTok": 2059,
+        "decodeTokS": 54,
+        "ttftMs": 159.3
+      },
+      {
+        "id": "B_base12z",
+        "exp": 48,
+        "given": 48,
+        "correct": true,
+        "ms": 18330,
+        "genTok": 961,
+        "decodeTokS": 53.6,
+        "ttftMs": 200.5
+      },
+      {
+        "id": "C_paths",
+        "exp": 126,
+        "given": 126,
+        "correct": true,
+        "ms": 18740,
+        "genTok": 975,
+        "decodeTokS": 53.4,
+        "ttftMs": 214.2
+      },
+      {
+        "id": "D_committee",
+        "exp": 666,
+        "given": 666,
+        "correct": true,
+        "ms": 18540,
+        "genTok": 959,
+        "decodeTokS": 53,
+        "ttftMs": 186.4
+      },
+      {
+        "id": "E_crt",
+        "exp": 59,
+        "given": 59,
+        "correct": true,
+        "ms": 16078,
+        "genTok": 825,
+        "decodeTokS": 52.8,
+        "ttftMs": 245.9
+      },
+      {
+        "id": "F_distinct4",
+        "exp": 4536,
+        "given": 4536,
+        "correct": true,
+        "ms": 12361,
+        "genTok": 634,
+        "decodeTokS": 52.9,
+        "ttftMs": 194
+      },
+      {
+        "id": "G_div",
+        "exp": 401,
+        "given": 401,
+        "correct": true,
+        "ms": 32015,
+        "genTok": 1655,
+        "decodeTokS": 52.6,
+        "ttftMs": 196.9
+      },
+      {
+        "id": "H_domino",
+        "exp": 89,
+        "given": 89,
+        "correct": true,
+        "ms": 16731,
+        "genTok": 863,
+        "decodeTokS": 52.8,
+        "ttftMs": 208.3
+      },
+      {
+        "id": "I_coeff",
+        "exp": 1452,
+        "given": 1452,
+        "correct": true,
+        "ms": 36573,
+        "genTok": 1880,
+        "decodeTokS": 52.3,
+        "ttftMs": 223.3
+      },
+      {
+        "id": "J_div20fact",
+        "exp": 41040,
+        "given": 41040,
+        "correct": true,
+        "ms": 39072,
+        "genTok": 1991,
+        "decodeTokS": 51.8,
+        "ttftMs": 214.5
+      },
+      {
+        "id": "K_digitsum",
+        "exp": 66,
+        "given": 66,
+        "correct": true,
+        "ms": 41021,
+        "genTok": 2069,
+        "decodeTokS": 51.3,
+        "ttftMs": 218.7
+      }
+    ],
+    "qwen3.6-35b-a3b": [
+      {
+        "id": "A_balls",
+        "exp": 44,
+        "given": 44,
+        "correct": true,
+        "ms": 27334,
+        "genTok": 1902,
+        "decodeTokS": 71.2,
+        "ttftMs": 194.4
+      },
+      {
+        "id": "B_base12z",
+        "exp": 48,
+        "given": 48,
+        "correct": true,
+        "ms": 19447,
+        "genTok": 1291,
+        "decodeTokS": 68.3,
+        "ttftMs": 205.7
+      },
+      {
+        "id": "C_paths",
+        "exp": 126,
+        "given": 126,
+        "correct": true,
+        "ms": 10889,
+        "genTok": 721,
+        "decodeTokS": 68.7,
+        "ttftMs": 198.1
+      },
+      {
+        "id": "D_committee",
+        "exp": 666,
+        "given": 666,
+        "correct": true,
+        "ms": 13707,
+        "genTok": 912,
+        "decodeTokS": 68.4,
+        "ttftMs": 198.8
+      },
+      {
+        "id": "E_crt",
+        "exp": 59,
+        "given": 59,
+        "correct": true,
+        "ms": 15320,
+        "genTok": 1014,
+        "decodeTokS": 68.4,
+        "ttftMs": 216.6
+      },
+      {
+        "id": "F_distinct4",
+        "exp": 4536,
+        "given": 4536,
+        "correct": true,
+        "ms": 12596,
+        "genTok": 839,
+        "decodeTokS": 68.7,
+        "ttftMs": 189.6
+      },
+      {
+        "id": "G_div",
+        "exp": 401,
+        "given": 401,
+        "correct": true,
+        "ms": 21170,
+        "genTok": 1414,
+        "decodeTokS": 68.4,
+        "ttftMs": 188.3
+      },
+      {
+        "id": "H_domino",
+        "exp": 89,
+        "given": 89,
+        "correct": true,
+        "ms": 13505,
+        "genTok": 898,
+        "decodeTokS": 68.8,
+        "ttftMs": 199.1
+      },
+      {
+        "id": "I_coeff",
+        "exp": 1452,
+        "given": 1452,
+        "correct": true,
+        "ms": 18467,
+        "genTok": 1235,
+        "decodeTokS": 68.8,
+        "ttftMs": 189.1
+      },
+      {
+        "id": "J_div20fact",
+        "exp": 41040,
+        "given": 41040,
+        "correct": true,
+        "ms": 23067,
+        "genTok": 1554,
+        "decodeTokS": 68.8,
+        "ttftMs": 183.7
+      },
+      {
+        "id": "K_digitsum",
+        "exp": 66,
+        "given": 66,
+        "correct": true,
+        "ms": 41604,
+        "genTok": 2799,
+        "decodeTokS": 68.6,
+        "ttftMs": 180.8
+      }
+    ]
+  },
+  "finishedAt": "2026-07-01T09:55:08.716Z"
+}

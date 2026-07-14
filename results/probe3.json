@@ -1,0 +1,330 @@
+{
+  "startedAt": "2026-07-01T10:18:52.098Z",
+  "machine": "Apple M5 Max, 36 GB",
+  "thinking": false,
+  "greedy": true,
+  "seed": 1,
+  "predict": 6000,
+  "models": [
+    "qwen3.5-4b",
+    "qwen3.5-9b",
+    "qwen3.6-35b-a3b"
+  ],
+  "pool": [
+    {
+      "id": "fib60",
+      "exp": 961
+    },
+    {
+      "id": "fib80",
+      "exp": 906
+    },
+    {
+      "id": "fib90",
+      "exp": 309
+    },
+    {
+      "id": "sumprimes50",
+      "exp": 5117
+    },
+    {
+      "id": "collatz27",
+      "exp": 111
+    },
+    {
+      "id": "teams",
+      "exp": 35
+    },
+    {
+      "id": "surj",
+      "exp": 1806
+    },
+    {
+      "id": "recur20",
+      "exp": 2097151
+    },
+    {
+      "id": "digit20fact",
+      "exp": 54
+    }
+  ],
+  "byModel": {
+    "qwen3.5-4b": [
+      {
+        "id": "fib60",
+        "exp": 961,
+        "given": 920,
+        "correct": false,
+        "ms": 26176,
+        "genTok": 2454,
+        "decodeTokS": 95.9,
+        "ttftMs": 121.3
+      },
+      {
+        "id": "fib80",
+        "exp": 906,
+        "given": 685,
+        "correct": false,
+        "ms": 31399,
+        "genTok": 2881,
+        "decodeTokS": 93.4,
+        "ttftMs": 111.5
+      },
+      {
+        "id": "fib90",
+        "exp": 309,
+        "given": 240,
+        "correct": false,
+        "ms": 73399,
+        "genTok": 5682,
+        "decodeTokS": 78.8,
+        "ttftMs": 112.7
+      },
+      {
+        "id": "sumprimes50",
+        "exp": 5117,
+        "given": 5125,
+        "correct": false,
+        "ms": 21502,
+        "genTok": 1248,
+        "decodeTokS": 59.4,
+        "ttftMs": 115.6
+      },
+      {
+        "id": "collatz27",
+        "exp": 111,
+        "given": 111,
+        "correct": true,
+        "ms": 75632,
+        "genTok": 5396,
+        "decodeTokS": 72.7,
+        "ttftMs": 154.4
+      },
+      {
+        "id": "teams",
+        "exp": 35,
+        "given": 35,
+        "correct": true,
+        "ms": 10168,
+        "genTok": 725,
+        "decodeTokS": 73.8,
+        "ttftMs": 119.8
+      },
+      {
+        "id": "surj",
+        "exp": 1806,
+        "given": 1806,
+        "correct": true,
+        "ms": 20230,
+        "genTok": 1431,
+        "decodeTokS": 72.5,
+        "ttftMs": 118
+      },
+      {
+        "id": "recur20",
+        "exp": 2097151,
+        "given": 2097151,
+        "correct": true,
+        "ms": 15295,
+        "genTok": 1076,
+        "decodeTokS": 72.3,
+        "ttftMs": 117.1
+      },
+      {
+        "id": "digit20fact",
+        "exp": 54,
+        "given": 54,
+        "correct": true,
+        "ms": 13499,
+        "genTok": 994,
+        "decodeTokS": 75.8,
+        "ttftMs": 115.8
+      }
+    ],
+    "qwen3.5-9b": [
+      {
+        "id": "fib60",
+        "exp": 961,
+        "given": 920,
+        "correct": false,
+        "ms": 43148,
+        "genTok": 2125,
+        "decodeTokS": 50,
+        "ttftMs": 197.5
+      },
+      {
+        "id": "fib80",
+        "exp": 906,
+        "given": 685,
+        "correct": false,
+        "ms": 124282,
+        "genTok": 5844,
+        "decodeTokS": 47.6,
+        "ttftMs": 281.1
+      },
+      {
+        "id": "fib90",
+        "exp": 309,
+        "given": 120,
+        "correct": false,
+        "ms": 83396,
+        "genTok": 3901,
+        "decodeTokS": 47.4,
+        "ttftMs": 306.1
+      },
+      {
+        "id": "sumprimes50",
+        "exp": 5117,
+        "given": 5088,
+        "correct": false,
+        "ms": 23599,
+        "genTok": 1092,
+        "decodeTokS": 47.2,
+        "ttftMs": 168.2
+      },
+      {
+        "id": "collatz27",
+        "exp": 111,
+        "given": null,
+        "correct": false,
+        "ms": 125542,
+        "genTok": 6000,
+        "decodeTokS": 48.4,
+        "ttftMs": 303
+      },
+      {
+        "id": "teams",
+        "exp": 35,
+        "given": 35,
+        "correct": true,
+        "ms": 13911,
+        "genTok": 687,
+        "decodeTokS": 51,
+        "ttftMs": 227.1
+      },
+      {
+        "id": "surj",
+        "exp": 1806,
+        "given": 1806,
+        "correct": true,
+        "ms": 25201,
+        "genTok": 1262,
+        "decodeTokS": 51.2,
+        "ttftMs": 222.9
+      },
+      {
+        "id": "recur20",
+        "exp": 2097151,
+        "given": 2097151,
+        "correct": true,
+        "ms": 22174,
+        "genTok": 1132,
+        "decodeTokS": 52.2,
+        "ttftMs": 221.9
+      },
+      {
+        "id": "digit20fact",
+        "exp": 54,
+        "given": 54,
+        "correct": true,
+        "ms": 18950,
+        "genTok": 969,
+        "decodeTokS": 52.4,
+        "ttftMs": 223.9
+      }
+    ],
+    "qwen3.6-35b-a3b": [
+      {
+        "id": "fib60",
+        "exp": 961,
+        "given": 920,
+        "correct": false,
+        "ms": 69855,
+        "genTok": 4710,
+        "decodeTokS": 68.4,
+        "ttftMs": 200.7
+      },
+      {
+        "id": "fib80",
+        "exp": 906,
+        "given": 685,
+        "correct": false,
+        "ms": 39411,
+        "genTok": 2710,
+        "decodeTokS": 70.2,
+        "ttftMs": 197.9
+      },
+      {
+        "id": "fib90",
+        "exp": 309,
+        "given": 120,
+        "correct": false,
+        "ms": 63405,
+        "genTok": 4249,
+        "decodeTokS": 68.2,
+        "ttftMs": 182.5
+      },
+      {
+        "id": "sumprimes50",
+        "exp": 5117,
+        "given": 5117,
+        "correct": true,
+        "ms": 28504,
+        "genTok": 1926,
+        "decodeTokS": 69,
+        "ttftMs": 152.5
+      },
+      {
+        "id": "collatz27",
+        "exp": 111,
+        "given": 111,
+        "correct": true,
+        "ms": 55050,
+        "genTok": 3734,
+        "decodeTokS": 69,
+        "ttftMs": 206.9
+      },
+      {
+        "id": "teams",
+        "exp": 35,
+        "given": 35,
+        "correct": true,
+        "ms": 10377,
+        "genTok": 700,
+        "decodeTokS": 70.3,
+        "ttftMs": 173.4
+      },
+      {
+        "id": "surj",
+        "exp": 1806,
+        "given": 1806,
+        "correct": true,
+        "ms": 17137,
+        "genTok": 1174,
+        "decodeTokS": 70.2,
+        "ttftMs": 156
+      },
+      {
+        "id": "recur20",
+        "exp": 2097151,
+        "given": 2097151,
+        "correct": true,
+        "ms": 15403,
+        "genTok": 1065,
+        "decodeTokS": 71.1,
+        "ttftMs": 181.5
+      },
+      {
+        "id": "digit20fact",
+        "exp": 54,
+        "given": 54,
+        "correct": true,
+        "ms": 14091,
+        "genTok": 975,
+        "decodeTokS": 71.3,
+        "ttftMs": 178.3
+      }
+    ]
+  },
+  "finishedAt": "2026-07-01T10:37:09.395Z"
+}
