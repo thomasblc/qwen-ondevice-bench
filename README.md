@@ -31,6 +31,8 @@ I did not get a clean result on the first try. Each iteration exposed a confound
 
 ## Results (combined hard + graded pools, greedy)
 
+![Hard reasoning: answers by model. The 4B and 9B both score 2/5, the 35B-A3B MoE scores 4/5.](assets/reasoning-grid.png)
+
 `.` = wrong or no answer, `OK` = correct.
 
 | Problem | Answer | 4B | 9B | MoE | Band |
@@ -67,6 +69,14 @@ I did not get a clean result on the first try. Each iteration exposed a confound
 3. **The MoE clears the long-computation tier alone** (`F(100)`, sum of 50 primes), where the small models get *close* then slip (4B: 5125 vs 5117; 9B: 5088). The MoE tracks state to the end.
 4. **Why the MoE wins is counterintuitive:** 35B total but ~3B active per token, *fewer* than the 9B dense's 9B active. Its advantage is capacity spread across experts plus being the most-trained model, not per-token compute. This also explains why the 9B does not dominate the 4B.
 5. **There is a real frontier** none of them reach under greedy (`pairs`, `euler`, `walk`, long fibs).
+
+## Performance
+
+Speed was not the point of the reasoning test, but for reference, here is decode throughput and time to first token on the same machine.
+
+![Decode speed and time to first token. The 4B leads at 73 to 92 tok/s, the 35B-A3B MoE 68 to 70, the 9B dense 50 to 54. TTFT 120 to 260ms.](assets/performance.png)
+
+The 4B leads throughput. The 35B-A3B MoE sits just behind it despite the 35B total size, because only ~3B params are active per token. The 9B dense, with no MoE routing, is the slowest of the three.
 
 ## Caveats (please read)
 
