@@ -21,6 +21,7 @@ A small, honest, reproducible benchmark of three Qwen models run **100% on-devic
 - Hardware: Apple M5 Max, 36 GB, GPU. Fully on-device.
 - Decoding: `temp: 0, seed: 1` (greedy, deterministic), `reasoning_budget: 0` (no thinking), **one completion call per problem** so no problem starves another's token budget.
 - Grading: every ground-truth answer is brute-forced in Python first (see `groundtruth*.py`), so the target is unimpeachable. Model output is graded by extracting the final `ANSWER: <integer>`.
+- Prompts: the exact prompt template and every problem, verbatim, are in [PROMPTS.md](PROMPTS.md).
 
 ## Why the method matters (the part I did not expect)
 
