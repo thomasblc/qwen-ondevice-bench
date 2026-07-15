@@ -85,6 +85,7 @@ The 4B leads throughput. The 35B-A3B MoE sits just behind it despite the 35B tot
 - Single greedy draw per problem (deterministic, but one sample).
 - Q4_K_M quantization; results may differ at higher precision.
 - Specific model builds on one machine.
+- Reasoning only. The same models were also given two open-ended **creative tasks** (an SVG and an HTML animation). Those are subjective and hand-scored, so they are not scored here; their exact prompts are in [PROMPTS.md](PROMPTS.md) for transparency.
 
 ## Reproduce
 

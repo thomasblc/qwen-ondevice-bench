@@ -68,3 +68,29 @@ Calibration pool. Under greedy decoding all three models solved all 11, so these
 | surj | 1806 | `In how many ways can 7 distinct books be distributed to 3 different students so that each student receives at least one book?` |
 | recur20 | 2097151 | `A sequence is defined by a(1) = 3 and a(n) = 2*a(n-1) + 1 for n >= 2. What is a(20)?` |
 | digit20fact | 54 | `What is the sum of the decimal digits of 20! (20 factorial)?` |
+
+---
+
+## Creative tasks (hand-scored)
+
+The same three models were also given two open-ended generation tasks, shown in the announcement thread. Unlike the reasoning pools these have **no single correct answer**, so they are **hand-scored** and are deliberately kept out of the difficulty matrix in the README (the matrix is the auto-graded, brute-forced reasoning set). They are documented here for transparency. Decoding for these differs from the reasoning runs: **default sampling** (not greedy), `reasoning_budget: 0`, one call per model, on the same M5 Max.
+
+### SVG (`run.mjs`, predict budget 4096)
+
+```
+Output ONLY a single self-contained SVG image (start with <svg ...> and end with </svg>, include a viewBox) depicting a Tyrannosaurus Rex knitting a wool sweater with knitting needles. Make it colorful, recognizable, and a little funny. Do not write any explanation, output the SVG markup only.
+```
+
+### Animation (`run_anim.mjs`, predict budget 8000)
+
+```
+Output ONLY a single self-contained HTML document (inline CSS and JavaScript, no external libraries, fonts, or assets).
+Animate a small robot walking.
+Requirements:
+- The robot has a clear head, a torso, two arms, and two legs.
+- It does a continuous walking cycle: the legs step and the arms swing, looping forever.
+- The robot moves forward, walking across the screen from left to right (then loops back).
+- It walks on green grass, with a simple natural landscape behind it: a sky, the sun or some clouds, and hills or trees.
+- The motion is smooth and auto-plays on load.
+Keep it simple and clearly readable. Output the HTML only. No markdown fences, no explanation.
+```
